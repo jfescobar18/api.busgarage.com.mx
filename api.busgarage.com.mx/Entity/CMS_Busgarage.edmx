@@ -1,0 +1,408 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CMS_BusgarageModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="cat_About_Us_Sections">
+          <Key>
+            <PropertyRef Name="About_Us_Section_Id" />
+          </Key>
+          <Property Name="About_Us_Section_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="About_Us_Section_Title" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="About_Us_Section_Content" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="cat_Offers_Image">
+          <Key>
+            <PropertyRef Name="Offers_Banner_Id" />
+          </Key>
+          <Property Name="Offers_Banner_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Offers_Banner_Img" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="cat_Slider_Images">
+          <Key>
+            <PropertyRef Name="Slider_Image_Id" />
+          </Key>
+          <Property Name="Slider_Image_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Slider_Image_Img" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="cat_Karts">
+          <Key>
+            <PropertyRef Name="Kart_Id" />
+          </Key>
+          <Property Name="Kart_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Kart_Json_Config" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Kart_Creation_Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="cat_Orders">
+          <Key>
+            <PropertyRef Name="Order_Id" />
+          </Key>
+          <Property Name="Order_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Kart_Id" Type="int" Nullable="false" />
+          <Property Name="Order_Client_Name" Type="nvarchar" MaxLength="1024" Nullable="false" />
+          <Property Name="Order_Client_Email" Type="nvarchar" MaxLength="512" Nullable="false" />
+          <Property Name="Order_Client_Phone" Type="int" Nullable="false" />
+          <Property Name="Order_Client_Address1" Type="nvarchar" MaxLength="1024" Nullable="false" />
+          <Property Name="Order_Client_Address2" Type="nvarchar" MaxLength="1024" Nullable="false" />
+          <Property Name="Order_Client_Province" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Order_Client_City" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Order_Client_Zip" Type="nvarchar" MaxLength="11" Nullable="false" />
+          <Property Name="Order_Client_Comments" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Order_Creation_Date" Type="datetime" Nullable="false" />
+          <Property Name="Order_Delivered_Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="cat_Products">
+          <Key>
+            <PropertyRef Name="Product_Id" />
+          </Key>
+          <Property Name="Product_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Product_Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Product_Price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Product_Disscount" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="Category_Id" Type="int" />
+          <Property Name="Product_Img" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Product_Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Product_Configurations" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Product_Creation_Date" Type="datetime" />
+          <Property Name="Product_Stock" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="cat_Sepomex">
+          <Key>
+            <PropertyRef Name="d_codigo" />
+          </Key>
+          <Property Name="d_codigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="d_asenta" Type="nvarchar" MaxLength="512" />
+          <Property Name="d_tipo_asenta" Type="nvarchar" MaxLength="512" />
+          <Property Name="D_mnpio" Type="nvarchar" MaxLength="512" />
+          <Property Name="d_estado" Type="nvarchar" MaxLength="512" />
+          <Property Name="d_ciudad" Type="nvarchar" MaxLength="512" />
+          <Property Name="d_CP" Type="nvarchar" MaxLength="25" />
+          <Property Name="c_estado" Type="nvarchar" MaxLength="512" />
+          <Property Name="c_oficina" Type="nvarchar" MaxLength="512" />
+          <Property Name="c_CP" Type="nvarchar" MaxLength="512" />
+          <Property Name="c_tipo_asenta" Type="nvarchar" MaxLength="512" />
+          <Property Name="c_mnpio" Type="nvarchar" MaxLength="512" />
+          <Property Name="id_asenta_cpcons" Type="nvarchar" MaxLength="512" />
+          <Property Name="d_zona" Type="nvarchar" MaxLength="512" />
+          <Property Name="c_cve_ciudad" Type="nvarchar" MaxLength="512" />
+        </EntityType>
+        <EntityType Name="cat_Categories">
+          <Key>
+            <PropertyRef Name="Category_Id" />
+          </Key>
+          <Property Name="Category_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Category_Name" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <Association Name="FK__cat_Order__Kart___20C1E124">
+          <End Role="cat_Karts" Type="Self.cat_Karts" Multiplicity="1" />
+          <End Role="cat_Orders" Type="Self.cat_Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cat_Karts">
+              <PropertyRef Name="Kart_Id" />
+            </Principal>
+            <Dependent Role="cat_Orders">
+              <PropertyRef Name="Kart_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__cat_Produ__Categ__182C9B23">
+          <End Role="cat_Categories" Type="Self.cat_Categories" Multiplicity="0..1" />
+          <End Role="cat_Products" Type="Self.cat_Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cat_Categories">
+              <PropertyRef Name="Category_Id" />
+            </Principal>
+            <Dependent Role="cat_Products">
+              <PropertyRef Name="Category_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CMS_BusgarageModelStoreContainer">
+          <EntitySet Name="cat_About_Us_Sections" EntityType="Self.cat_About_Us_Sections" Schema="busgarage_admin" store:Type="Tables" />
+          <EntitySet Name="cat_Offers_Image" EntityType="Self.cat_Offers_Image" Schema="busgarage_admin" store:Type="Tables" />
+          <EntitySet Name="cat_Slider_Images" EntityType="Self.cat_Slider_Images" Schema="busgarage_admin" store:Type="Tables" />
+          <EntitySet Name="cat_Karts" EntityType="Self.cat_Karts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cat_Orders" EntityType="Self.cat_Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cat_Products" EntityType="Self.cat_Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cat_Sepomex" EntityType="Self.cat_Sepomex" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cat_Categories" EntityType="Self.cat_Categories" Schema="lookup" store:Type="Tables" />
+          <AssociationSet Name="FK__cat_Order__Kart___20C1E124" Association="Self.FK__cat_Order__Kart___20C1E124">
+            <End Role="cat_Karts" EntitySet="cat_Karts" />
+            <End Role="cat_Orders" EntitySet="cat_Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__cat_Produ__Categ__182C9B23" Association="Self.FK__cat_Produ__Categ__182C9B23">
+            <End Role="cat_Categories" EntitySet="cat_Categories" />
+            <End Role="cat_Products" EntitySet="cat_Products" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CMS_BusgarageModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="cat_About_Us_Sections">
+          <Key>
+            <PropertyRef Name="About_Us_Section_Id" />
+          </Key>
+          <Property Name="About_Us_Section_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="About_Us_Section_Title" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="About_Us_Section_Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="cat_Offers_Image">
+          <Key>
+            <PropertyRef Name="Offers_Banner_Id" />
+          </Key>
+          <Property Name="Offers_Banner_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Offers_Banner_Img" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="cat_Slider_Images">
+          <Key>
+            <PropertyRef Name="Slider_Image_Id" />
+          </Key>
+          <Property Name="Slider_Image_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Slider_Image_Img" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="cat_Karts">
+          <Key>
+            <PropertyRef Name="Kart_Id" />
+          </Key>
+          <Property Name="Kart_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Kart_Json_Config" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Kart_Creation_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="cat_Orders" Relationship="Self.FK__cat_Order__Kart___20C1E124" FromRole="cat_Karts" ToRole="cat_Orders" />
+        </EntityType>
+        <EntityType Name="cat_Orders">
+          <Key>
+            <PropertyRef Name="Order_Id" />
+          </Key>
+          <Property Name="Order_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Kart_Id" Type="Int32" Nullable="false" />
+          <Property Name="Order_Client_Name" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Order_Client_Email" Type="String" MaxLength="512" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Order_Client_Phone" Type="Int32" Nullable="false" />
+          <Property Name="Order_Client_Address1" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Order_Client_Address2" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Order_Client_Province" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Order_Client_City" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Order_Client_Zip" Type="String" MaxLength="11" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Order_Client_Comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Order_Creation_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Order_Delivered_Date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="cat_Karts" Relationship="Self.FK__cat_Order__Kart___20C1E124" FromRole="cat_Orders" ToRole="cat_Karts" />
+        </EntityType>
+        <EntityType Name="cat_Products">
+          <Key>
+            <PropertyRef Name="Product_Id" />
+          </Key>
+          <Property Name="Product_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Product_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Product_Price" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Product_Disscount" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="Category_Id" Type="Int32" />
+          <Property Name="Product_Img" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Product_Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Product_Configurations" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Product_Creation_Date" Type="DateTime" Precision="3" />
+          <Property Name="Product_Stock" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="cat_Categories" Relationship="Self.FK__cat_Produ__Categ__182C9B23" FromRole="cat_Products" ToRole="cat_Categories" />
+        </EntityType>
+        <EntityType Name="cat_Sepomex">
+          <Key>
+            <PropertyRef Name="d_codigo" />
+          </Key>
+          <Property Name="d_codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="d_asenta" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="d_tipo_asenta" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="D_mnpio" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="d_estado" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="d_ciudad" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="d_CP" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="c_estado" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="c_oficina" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="c_CP" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="c_tipo_asenta" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="c_mnpio" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="id_asenta_cpcons" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="d_zona" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="c_cve_ciudad" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="cat_Categories">
+          <Key>
+            <PropertyRef Name="Category_Id" />
+          </Key>
+          <Property Name="Category_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Category_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="cat_Products" Relationship="Self.FK__cat_Produ__Categ__182C9B23" FromRole="cat_Categories" ToRole="cat_Products" />
+        </EntityType>
+        <Association Name="FK__cat_Order__Kart___20C1E124">
+          <End Role="cat_Karts" Type="Self.cat_Karts" Multiplicity="1" />
+          <End Role="cat_Orders" Type="Self.cat_Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cat_Karts">
+              <PropertyRef Name="Kart_Id" />
+            </Principal>
+            <Dependent Role="cat_Orders">
+              <PropertyRef Name="Kart_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__cat_Produ__Categ__182C9B23">
+          <End Role="cat_Categories" Type="Self.cat_Categories" Multiplicity="0..1" />
+          <End Role="cat_Products" Type="Self.cat_Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cat_Categories">
+              <PropertyRef Name="Category_Id" />
+            </Principal>
+            <Dependent Role="cat_Products">
+              <PropertyRef Name="Category_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CMS_BusgarageEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="cat_About_Us_Sections" EntityType="Self.cat_About_Us_Sections" />
+          <EntitySet Name="cat_Offers_Image" EntityType="Self.cat_Offers_Image" />
+          <EntitySet Name="cat_Slider_Images" EntityType="Self.cat_Slider_Images" />
+          <EntitySet Name="cat_Karts" EntityType="Self.cat_Karts" />
+          <EntitySet Name="cat_Orders" EntityType="Self.cat_Orders" />
+          <EntitySet Name="cat_Products" EntityType="Self.cat_Products" />
+          <EntitySet Name="cat_Sepomex" EntityType="Self.cat_Sepomex" />
+          <EntitySet Name="cat_Categories" EntityType="Self.cat_Categories" />
+          <AssociationSet Name="FK__cat_Order__Kart___20C1E124" Association="Self.FK__cat_Order__Kart___20C1E124">
+            <End Role="cat_Karts" EntitySet="cat_Karts" />
+            <End Role="cat_Orders" EntitySet="cat_Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__cat_Produ__Categ__182C9B23" Association="Self.FK__cat_Produ__Categ__182C9B23">
+            <End Role="cat_Categories" EntitySet="cat_Categories" />
+            <End Role="cat_Products" EntitySet="cat_Products" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CMS_BusgarageModelStoreContainer" CdmEntityContainer="CMS_BusgarageEntities">
+          <EntitySetMapping Name="cat_About_Us_Sections">
+            <EntityTypeMapping TypeName="CMS_BusgarageModel.cat_About_Us_Sections">
+              <MappingFragment StoreEntitySet="cat_About_Us_Sections">
+                <ScalarProperty Name="About_Us_Section_Id" ColumnName="About_Us_Section_Id" />
+                <ScalarProperty Name="About_Us_Section_Title" ColumnName="About_Us_Section_Title" />
+                <ScalarProperty Name="About_Us_Section_Content" ColumnName="About_Us_Section_Content" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cat_Offers_Image">
+            <EntityTypeMapping TypeName="CMS_BusgarageModel.cat_Offers_Image">
+              <MappingFragment StoreEntitySet="cat_Offers_Image">
+                <ScalarProperty Name="Offers_Banner_Id" ColumnName="Offers_Banner_Id" />
+                <ScalarProperty Name="Offers_Banner_Img" ColumnName="Offers_Banner_Img" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cat_Slider_Images">
+            <EntityTypeMapping TypeName="CMS_BusgarageModel.cat_Slider_Images">
+              <MappingFragment StoreEntitySet="cat_Slider_Images">
+                <ScalarProperty Name="Slider_Image_Id" ColumnName="Slider_Image_Id" />
+                <ScalarProperty Name="Slider_Image_Img" ColumnName="Slider_Image_Img" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cat_Karts">
+            <EntityTypeMapping TypeName="CMS_BusgarageModel.cat_Karts">
+              <MappingFragment StoreEntitySet="cat_Karts">
+                <ScalarProperty Name="Kart_Id" ColumnName="Kart_Id" />
+                <ScalarProperty Name="Kart_Json_Config" ColumnName="Kart_Json_Config" />
+                <ScalarProperty Name="Kart_Creation_Date" ColumnName="Kart_Creation_Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cat_Orders">
+            <EntityTypeMapping TypeName="CMS_BusgarageModel.cat_Orders">
+              <MappingFragment StoreEntitySet="cat_Orders">
+                <ScalarProperty Name="Order_Id" ColumnName="Order_Id" />
+                <ScalarProperty Name="Kart_Id" ColumnName="Kart_Id" />
+                <ScalarProperty Name="Order_Client_Name" ColumnName="Order_Client_Name" />
+                <ScalarProperty Name="Order_Client_Email" ColumnName="Order_Client_Email" />
+                <ScalarProperty Name="Order_Client_Phone" ColumnName="Order_Client_Phone" />
+                <ScalarProperty Name="Order_Client_Address1" ColumnName="Order_Client_Address1" />
+                <ScalarProperty Name="Order_Client_Address2" ColumnName="Order_Client_Address2" />
+                <ScalarProperty Name="Order_Client_Province" ColumnName="Order_Client_Province" />
+                <ScalarProperty Name="Order_Client_City" ColumnName="Order_Client_City" />
+                <ScalarProperty Name="Order_Client_Zip" ColumnName="Order_Client_Zip" />
+                <ScalarProperty Name="Order_Client_Comments" ColumnName="Order_Client_Comments" />
+                <ScalarProperty Name="Order_Creation_Date" ColumnName="Order_Creation_Date" />
+                <ScalarProperty Name="Order_Delivered_Date" ColumnName="Order_Delivered_Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cat_Products">
+            <EntityTypeMapping TypeName="CMS_BusgarageModel.cat_Products">
+              <MappingFragment StoreEntitySet="cat_Products">
+                <ScalarProperty Name="Product_Id" ColumnName="Product_Id" />
+                <ScalarProperty Name="Product_Name" ColumnName="Product_Name" />
+                <ScalarProperty Name="Product_Price" ColumnName="Product_Price" />
+                <ScalarProperty Name="Product_Disscount" ColumnName="Product_Disscount" />
+                <ScalarProperty Name="Category_Id" ColumnName="Category_Id" />
+                <ScalarProperty Name="Product_Img" ColumnName="Product_Img" />
+                <ScalarProperty Name="Product_Description" ColumnName="Product_Description" />
+                <ScalarProperty Name="Product_Configurations" ColumnName="Product_Configurations" />
+                <ScalarProperty Name="Product_Creation_Date" ColumnName="Product_Creation_Date" />
+                <ScalarProperty Name="Product_Stock" ColumnName="Product_Stock" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cat_Sepomex">
+            <EntityTypeMapping TypeName="CMS_BusgarageModel.cat_Sepomex">
+              <MappingFragment StoreEntitySet="cat_Sepomex">
+                <ScalarProperty Name="d_codigo" ColumnName="d_codigo" />
+                <ScalarProperty Name="d_asenta" ColumnName="d_asenta" />
+                <ScalarProperty Name="d_tipo_asenta" ColumnName="d_tipo_asenta" />
+                <ScalarProperty Name="D_mnpio" ColumnName="D_mnpio" />
+                <ScalarProperty Name="d_estado" ColumnName="d_estado" />
+                <ScalarProperty Name="d_ciudad" ColumnName="d_ciudad" />
+                <ScalarProperty Name="d_CP" ColumnName="d_CP" />
+                <ScalarProperty Name="c_estado" ColumnName="c_estado" />
+                <ScalarProperty Name="c_oficina" ColumnName="c_oficina" />
+                <ScalarProperty Name="c_CP" ColumnName="c_CP" />
+                <ScalarProperty Name="c_tipo_asenta" ColumnName="c_tipo_asenta" />
+                <ScalarProperty Name="c_mnpio" ColumnName="c_mnpio" />
+                <ScalarProperty Name="id_asenta_cpcons" ColumnName="id_asenta_cpcons" />
+                <ScalarProperty Name="d_zona" ColumnName="d_zona" />
+                <ScalarProperty Name="c_cve_ciudad" ColumnName="c_cve_ciudad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cat_Categories">
+            <EntityTypeMapping TypeName="CMS_BusgarageModel.cat_Categories">
+              <MappingFragment StoreEntitySet="cat_Categories">
+                <ScalarProperty Name="Category_Id" ColumnName="Category_Id" />
+                <ScalarProperty Name="Category_Name" ColumnName="Category_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -45,6 +45,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -52,6 +58,7 @@
     <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.Cors, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.7\lib\net45\System.Web.Cors.dll</HintPath>
     </Reference>
@@ -140,15 +147,66 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Entity\cat_About_Us_Sections.cs">
+      <DependentUpon>CMS_Busgarage.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\cat_Categories.cs">
+      <DependentUpon>CMS_Busgarage.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\cat_Karts.cs">
+      <DependentUpon>CMS_Busgarage.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\cat_Offers_Image.cs">
+      <DependentUpon>CMS_Busgarage.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\cat_Orders.cs">
+      <DependentUpon>CMS_Busgarage.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\cat_Products.cs">
+      <DependentUpon>CMS_Busgarage.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\cat_Sepomex.cs">
+      <DependentUpon>CMS_Busgarage.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\cat_Slider_Images.cs">
+      <DependentUpon>CMS_Busgarage.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\CMS_Busgarage.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CMS_Busgarage.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\CMS_Busgarage.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CMS_Busgarage.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\CMS_Busgarage.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CMS_Busgarage.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="MessageHandlers\APIKeyMessageHandlercs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
+    <Content Include="Entity\CMS_Busgarage.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CMS_Busgarage.Context.cs</LastGenOutput>
+      <DependentUpon>CMS_Busgarage.edmx</DependentUpon>
+    </Content>
+    <Content Include="Entity\CMS_Busgarage.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CMS_Busgarage.edmx</DependentUpon>
+      <LastGenOutput>CMS_Busgarage.cs</LastGenOutput>
+    </Content>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="SQL\05102019_Create_Database.sql" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -170,7 +228,17 @@
     <Folder Include="Scripts\" />
   </ItemGroup>
   <ItemGroup>
+    <EntityDeploy Include="Entity\CMS_Busgarage.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>CMS_Busgarage.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Entity\CMS_Busgarage.edmx.diagram">
+      <DependentUpon>CMS_Busgarage.edmx</DependentUpon>
+    </Content>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
