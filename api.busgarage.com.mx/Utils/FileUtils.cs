@@ -62,9 +62,11 @@ namespace Utils
         {
             try
             {   
-                if (File.Exists(HttpContext.Current.Server.MapPath("~/" + path)))
+                string fullPath = HttpContext.Current.Server.MapPath("~/" + path);
+
+                if (File.Exists(fullPath))
                 {  
-                    File.Delete(HttpContext.Current.Server.MapPath("~/" + path));
+                    File.Delete(fullPath);
                 }
             }
             catch (IOException ioExp)
