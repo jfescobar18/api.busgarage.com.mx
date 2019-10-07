@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CMS_BusgarageModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CMS_BusgarageModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="cat_About_Us_Sections">
           <Key>
             <PropertyRef Name="About_Us_Section_Id" />
@@ -53,6 +53,15 @@
           <Property Name="Order_Creation_Date" Type="datetime" Nullable="false" />
           <Property Name="Order_Delivered_Date" Type="datetime" />
         </EntityType>
+        <EntityType Name="cat_Product_Galery_Images">
+          <Key>
+            <PropertyRef Name="Product_Galery_Image_Id" />
+          </Key>
+          <Property Name="Product_Galery_Image_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Product_Id" Type="int" Nullable="false" />
+          <Property Name="Product_Galery_Image_Img" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Product_Galery_Image_Order" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="cat_Products">
           <Key>
             <PropertyRef Name="Product_Id" />
@@ -67,6 +76,14 @@
           <Property Name="Product_Configurations" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Product_Creation_Date" Type="datetime" />
           <Property Name="Product_Stock" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="cat_Reviews">
+          <Key>
+            <PropertyRef Name="Review_Id" />
+          </Key>
+          <Property Name="Review_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Product_Id" Type="int" Nullable="false" />
+          <Property Name="Review_Score" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="cat_Sepomex">
           <Key>
@@ -119,13 +136,39 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__cat_Produ__Produ__286302EC">
+          <End Role="cat_Products" Type="Self.cat_Products" Multiplicity="1" />
+          <End Role="cat_Product_Galery_Images" Type="Self.cat_Product_Galery_Images" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cat_Products">
+              <PropertyRef Name="Product_Id" />
+            </Principal>
+            <Dependent Role="cat_Product_Galery_Images">
+              <PropertyRef Name="Product_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__cat_Revie__Produ__24927208">
+          <End Role="cat_Products" Type="Self.cat_Products" Multiplicity="1" />
+          <End Role="cat_Reviews" Type="Self.cat_Reviews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cat_Products">
+              <PropertyRef Name="Product_Id" />
+            </Principal>
+            <Dependent Role="cat_Reviews">
+              <PropertyRef Name="Product_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="CMS_BusgarageModelStoreContainer">
           <EntitySet Name="cat_About_Us_Sections" EntityType="Self.cat_About_Us_Sections" Schema="busgarage_admin" store:Type="Tables" />
           <EntitySet Name="cat_Offers_Image" EntityType="Self.cat_Offers_Image" Schema="busgarage_admin" store:Type="Tables" />
           <EntitySet Name="cat_Slider_Images" EntityType="Self.cat_Slider_Images" Schema="busgarage_admin" store:Type="Tables" />
           <EntitySet Name="cat_Karts" EntityType="Self.cat_Karts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cat_Orders" EntityType="Self.cat_Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cat_Product_Galery_Images" EntityType="Self.cat_Product_Galery_Images" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cat_Products" EntityType="Self.cat_Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cat_Reviews" EntityType="Self.cat_Reviews" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cat_Sepomex" EntityType="Self.cat_Sepomex" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cat_Categories" EntityType="Self.cat_Categories" Schema="lookup" store:Type="Tables" />
           <AssociationSet Name="FK__cat_Order__Kart___20C1E124" Association="Self.FK__cat_Order__Kart___20C1E124">
@@ -136,9 +179,16 @@
             <End Role="cat_Categories" EntitySet="cat_Categories" />
             <End Role="cat_Products" EntitySet="cat_Products" />
           </AssociationSet>
+          <AssociationSet Name="FK__cat_Produ__Produ__286302EC" Association="Self.FK__cat_Produ__Produ__286302EC">
+            <End Role="cat_Products" EntitySet="cat_Products" />
+            <End Role="cat_Product_Galery_Images" EntitySet="cat_Product_Galery_Images" />
+          </AssociationSet>
+          <AssociationSet Name="FK__cat_Revie__Produ__24927208" Association="Self.FK__cat_Revie__Produ__24927208">
+            <End Role="cat_Products" EntitySet="cat_Products" />
+            <End Role="cat_Reviews" EntitySet="cat_Reviews" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CMS_BusgarageModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -207,6 +257,8 @@
           <Property Name="Product_Creation_Date" Type="DateTime" Precision="3" />
           <Property Name="Product_Stock" Type="Int32" Nullable="false" />
           <NavigationProperty Name="cat_Categories" Relationship="Self.FK__cat_Produ__Categ__182C9B23" FromRole="cat_Products" ToRole="cat_Categories" />
+          <NavigationProperty Name="cat_Product_Galery_Images" Relationship="CMS_BusgarageModel.FK__cat_Produ__Produ__286302EC" FromRole="cat_Products" ToRole="cat_Product_Galery_Images" />
+          <NavigationProperty Name="cat_Reviews" Relationship="CMS_BusgarageModel.FK__cat_Revie__Produ__24927208" FromRole="cat_Products" ToRole="cat_Reviews" />
         </EntityType>
         <EntityType Name="cat_Sepomex">
           <Key>
@@ -277,7 +329,60 @@
             <End Role="cat_Categories" EntitySet="cat_Categories" />
             <End Role="cat_Products" EntitySet="cat_Products" />
           </AssociationSet>
+          <EntitySet Name="cat_Product_Galery_Images" EntityType="CMS_BusgarageModel.cat_Product_Galery_Images" />
+          <EntitySet Name="cat_Reviews" EntityType="CMS_BusgarageModel.cat_Reviews" />
+          <AssociationSet Name="FK__cat_Produ__Produ__286302EC" Association="CMS_BusgarageModel.FK__cat_Produ__Produ__286302EC">
+            <End Role="cat_Products" EntitySet="cat_Products" />
+            <End Role="cat_Product_Galery_Images" EntitySet="cat_Product_Galery_Images" />
+          </AssociationSet>
+          <AssociationSet Name="FK__cat_Revie__Produ__24927208" Association="CMS_BusgarageModel.FK__cat_Revie__Produ__24927208">
+            <End Role="cat_Products" EntitySet="cat_Products" />
+            <End Role="cat_Reviews" EntitySet="cat_Reviews" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="cat_Product_Galery_Images">
+          <Key>
+            <PropertyRef Name="Product_Galery_Image_Id" />
+          </Key>
+          <Property Name="Product_Galery_Image_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Product_Id" Type="Int32" Nullable="false" />
+          <Property Name="Product_Galery_Image_Img" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Product_Galery_Image_Order" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="cat_Products" Relationship="CMS_BusgarageModel.FK__cat_Produ__Produ__286302EC" FromRole="cat_Product_Galery_Images" ToRole="cat_Products" />
+        </EntityType>
+        <EntityType Name="cat_Reviews">
+          <Key>
+            <PropertyRef Name="Review_Id" />
+          </Key>
+          <Property Name="Review_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Product_Id" Type="Int32" Nullable="false" />
+          <Property Name="Review_Score" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="cat_Products" Relationship="CMS_BusgarageModel.FK__cat_Revie__Produ__24927208" FromRole="cat_Reviews" ToRole="cat_Products" />
+        </EntityType>
+        <Association Name="FK__cat_Produ__Produ__286302EC">
+          <End Type="CMS_BusgarageModel.cat_Products" Role="cat_Products" Multiplicity="1" />
+          <End Type="CMS_BusgarageModel.cat_Product_Galery_Images" Role="cat_Product_Galery_Images" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cat_Products">
+              <PropertyRef Name="Product_Id" />
+            </Principal>
+            <Dependent Role="cat_Product_Galery_Images">
+              <PropertyRef Name="Product_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__cat_Revie__Produ__24927208">
+          <End Type="CMS_BusgarageModel.cat_Products" Role="cat_Products" Multiplicity="1" />
+          <End Type="CMS_BusgarageModel.cat_Reviews" Role="cat_Reviews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cat_Products">
+              <PropertyRef Name="Product_Id" />
+            </Principal>
+            <Dependent Role="cat_Reviews">
+              <PropertyRef Name="Product_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -379,6 +484,25 @@
               <MappingFragment StoreEntitySet="cat_Categories">
                 <ScalarProperty Name="Category_Id" ColumnName="Category_Id" />
                 <ScalarProperty Name="Category_Name" ColumnName="Category_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cat_Product_Galery_Images">
+            <EntityTypeMapping TypeName="CMS_BusgarageModel.cat_Product_Galery_Images">
+              <MappingFragment StoreEntitySet="cat_Product_Galery_Images">
+                <ScalarProperty Name="Product_Galery_Image_Order" ColumnName="Product_Galery_Image_Order" />
+                <ScalarProperty Name="Product_Galery_Image_Img" ColumnName="Product_Galery_Image_Img" />
+                <ScalarProperty Name="Product_Id" ColumnName="Product_Id" />
+                <ScalarProperty Name="Product_Galery_Image_Id" ColumnName="Product_Galery_Image_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cat_Reviews">
+            <EntityTypeMapping TypeName="CMS_BusgarageModel.cat_Reviews">
+              <MappingFragment StoreEntitySet="cat_Reviews">
+                <ScalarProperty Name="Review_Score" ColumnName="Review_Score" />
+                <ScalarProperty Name="Product_Id" ColumnName="Product_Id" />
+                <ScalarProperty Name="Review_Id" ColumnName="Review_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
