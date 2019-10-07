@@ -147,6 +147,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AdminContentController.cs" />
+    <Compile Include="Controllers\AdminProducController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Entity\cat_About_Us_Sections.cs">
       <DependentUpon>CMS_Busgarage.tt</DependentUpon>

@@ -9,20 +9,20 @@ GO
 CREATE SCHEMA [lookup]
 GO
 
-CREATE TABLE [cat_Slider_Images](
+CREATE TABLE [dbo].[cat_Slider_Images](
 	[Slider_Image_Id][int] PRIMARY KEY IDENTITY(1,1) NOT NULL,
 	[Slider_Image_Img][nvarchar](max) NOT NULL
 )
 GO
 
-CREATE TABLE [cat_About_Us_Sections](
+CREATE TABLE [dbo].[cat_About_Us_Sections](
 	[About_Us_Section_Id][int] PRIMARY KEY IDENTITY(1,1) NOT NULL,
 	[About_Us_Section_Title][nvarchar](255) NOT NULL,
 	[About_Us_Section_Content][nvarchar](max) NOT NULL,
 )
 GO
 
-CREATE TABLE [cat_Offers_Image](
+CREATE TABLE [dbo].[cat_Offers_Image](
 	[Offers_Banner_Id][int] PRIMARY KEY IDENTITY(1,1) NOT NULL,
 	[Offers_Banner_Img][nvarchar](max) NOT NULL
 )
@@ -90,3 +90,10 @@ CREATE TABLE [dbo].[cat_Orders](
 	[Order_Delivered_Date][datetime] NULL
 )
 GO
+
+CREATE TABLE [dbo].[cat_Product_Galery_Images](
+	[Product_Galery_Image_Id] [int] IDENTITY(1,1) NOT NULL,
+	[Product_Id] [int] NOT NULL FOREIGN KEY REFERENCES [dbo].[cat_Products] ([Product_Id]),
+	[Product_Galery_Image_Img] [nvarchar](max) NOT NULL,
+	[Product_Galery_Image_Order] [int] NOT NULL
+)

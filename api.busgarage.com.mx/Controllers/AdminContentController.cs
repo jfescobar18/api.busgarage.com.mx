@@ -29,17 +29,13 @@ namespace api.busgarage.com.mx.Controllers
             {
                 FileUtils.UploadImage(HttpContext.Current.Request, "SliderImages", ref statusCode, ref dict, ref filenames);
 
-                if (statusCode == HttpStatusCode.OK)
+                var sliderImage = new cat_Slider_Images()
                 {
-                    var sliderImage = new cat_Slider_Images()
-                    {
-                        Slider_Image_Img = filenames[0]
-                    };
+                    Slider_Image_Img = filenames[0]
+                };
 
-                    entity.cat_Slider_Images.Add(sliderImage);
-                    entity.SaveChanges();
-                }
-
+                entity.cat_Slider_Images.Add(sliderImage);
+                entity.SaveChanges();
             }
             catch (Exception ex)
             {
@@ -65,11 +61,8 @@ namespace api.busgarage.com.mx.Controllers
 
                 FileUtils.ReplaceFile(sliderImage.Slider_Image_Img, HttpContext.Current.Request, "SliderImages", ref statusCode, ref dict, ref filenames);
 
-                if (statusCode == HttpStatusCode.OK)
-                {
-                    sliderImage.Slider_Image_Img = filenames[0];
-                    entity.SaveChanges();
-                }
+                sliderImage.Slider_Image_Img = filenames[0];
+                entity.SaveChanges();
             }
             catch (Exception ex)
             {
@@ -81,8 +74,8 @@ namespace api.busgarage.com.mx.Controllers
         }
 
         [HttpPost]
-        [Route("AdminContent/DelteSliderImage")]
-        public async Task<HttpResponseMessage> DelteSliderImage([FromBody] int Slider_Image_Id)
+        [Route("AdminContent/DeleteSliderImage")]
+        public async Task<HttpResponseMessage> DeleteSliderImage([FromBody] int Slider_Image_Id)
         {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             CMS_BusgarageEntities entity = new CMS_BusgarageEntities();
@@ -142,7 +135,7 @@ namespace api.busgarage.com.mx.Controllers
                 entity.SaveChanges();
 
                 statusCode = HttpStatusCode.OK;
-                dict.Add("message", "Seciont added successfully");
+                dict.Add("message", "Section added successfully");
             }
             catch (Exception ex)
             {
@@ -170,7 +163,7 @@ namespace api.busgarage.com.mx.Controllers
                 entity.SaveChanges();
 
                 statusCode = HttpStatusCode.OK;
-                dict.Add("message", "Seciont updated successfully");
+                dict.Add("message", "Section updated successfully");
             }
             catch (Exception ex)
             {
@@ -197,7 +190,7 @@ namespace api.busgarage.com.mx.Controllers
                 entity.SaveChanges();
 
                 statusCode = HttpStatusCode.OK;
-                dict.Add("message", "Seciont deleted successfully");
+                dict.Add("message", "Section deleted successfully");
             }
             catch (Exception ex)
             {
@@ -237,24 +230,18 @@ namespace api.busgarage.com.mx.Controllers
                 {
                     FileUtils.UploadImage(HttpContext.Current.Request, "OfferImage", ref statusCode, ref dict, ref filenames);
 
-                    if(statusCode == HttpStatusCode.OK)
+                    offersImage = new cat_Offers_Image()
                     {
-                        offersImage = new cat_Offers_Image()
-                        {
-                            Offers_Banner_Img = filenames[0]
-                        };
+                        Offers_Banner_Img = filenames[0]
+                    };
 
-                        entity.cat_Offers_Image.Add(offersImage);
-                    }
+                    entity.cat_Offers_Image.Add(offersImage);
                 }
                 else
                 {
                     FileUtils.ReplaceFile(offersImage.Offers_Banner_Img, HttpContext.Current.Request, "OfferImage", ref statusCode, ref dict, ref filenames);
 
-                    if (statusCode == HttpStatusCode.OK)
-                    {
-                        offersImage.Offers_Banner_Img = filenames[0];
-                    }
+                    offersImage.Offers_Banner_Img = filenames[0];
                 }
                 entity.SaveChanges();
 

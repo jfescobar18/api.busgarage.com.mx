@@ -13,20 +13,6 @@
           <Property Name="About_Us_Section_Title" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="About_Us_Section_Content" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
-        <EntityType Name="cat_Offers_Image">
-          <Key>
-            <PropertyRef Name="Offers_Banner_Id" />
-          </Key>
-          <Property Name="Offers_Banner_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Offers_Banner_Img" Type="nvarchar(max)" Nullable="false" />
-        </EntityType>
-        <EntityType Name="cat_Slider_Images">
-          <Key>
-            <PropertyRef Name="Slider_Image_Id" />
-          </Key>
-          <Property Name="Slider_Image_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Slider_Image_Img" Type="nvarchar(max)" Nullable="false" />
-        </EntityType>
         <EntityType Name="cat_Karts">
           <Key>
             <PropertyRef Name="Kart_Id" />
@@ -34,6 +20,13 @@
           <Property Name="Kart_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Kart_Json_Config" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Kart_Creation_Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="cat_Offers_Image">
+          <Key>
+            <PropertyRef Name="Offers_Banner_Id" />
+          </Key>
+          <Property Name="Offers_Banner_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Offers_Banner_Img" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="cat_Orders">
           <Key>
@@ -105,6 +98,13 @@
           <Property Name="d_zona" Type="nvarchar" MaxLength="512" />
           <Property Name="c_cve_ciudad" Type="nvarchar" MaxLength="512" />
         </EntityType>
+        <EntityType Name="cat_Slider_Images">
+          <Key>
+            <PropertyRef Name="Slider_Image_Id" />
+          </Key>
+          <Property Name="Slider_Image_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Slider_Image_Img" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
         <EntityType Name="cat_Categories">
           <Key>
             <PropertyRef Name="Category_Id" />
@@ -161,15 +161,15 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="CMS_BusgarageModelStoreContainer">
-          <EntitySet Name="cat_About_Us_Sections" EntityType="Self.cat_About_Us_Sections" Schema="busgarage_admin" store:Type="Tables" />
-          <EntitySet Name="cat_Offers_Image" EntityType="Self.cat_Offers_Image" Schema="busgarage_admin" store:Type="Tables" />
-          <EntitySet Name="cat_Slider_Images" EntityType="Self.cat_Slider_Images" Schema="busgarage_admin" store:Type="Tables" />
+          <EntitySet Name="cat_About_Us_Sections" EntityType="Self.cat_About_Us_Sections" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cat_Karts" EntityType="Self.cat_Karts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cat_Offers_Image" EntityType="Self.cat_Offers_Image" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cat_Orders" EntityType="Self.cat_Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cat_Product_Galery_Images" EntityType="Self.cat_Product_Galery_Images" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cat_Products" EntityType="Self.cat_Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cat_Reviews" EntityType="Self.cat_Reviews" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cat_Sepomex" EntityType="Self.cat_Sepomex" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cat_Slider_Images" EntityType="Self.cat_Slider_Images" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cat_Categories" EntityType="Self.cat_Categories" Schema="lookup" store:Type="Tables" />
           <AssociationSet Name="FK__cat_Order__Kart___20C1E124" Association="Self.FK__cat_Order__Kart___20C1E124">
             <End Role="cat_Karts" EntitySet="cat_Karts" />
@@ -192,28 +192,6 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CMS_BusgarageModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="cat_About_Us_Sections">
-          <Key>
-            <PropertyRef Name="About_Us_Section_Id" />
-          </Key>
-          <Property Name="About_Us_Section_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="About_Us_Section_Title" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="About_Us_Section_Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-        </EntityType>
-        <EntityType Name="cat_Offers_Image">
-          <Key>
-            <PropertyRef Name="Offers_Banner_Id" />
-          </Key>
-          <Property Name="Offers_Banner_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Offers_Banner_Img" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-        </EntityType>
-        <EntityType Name="cat_Slider_Images">
-          <Key>
-            <PropertyRef Name="Slider_Image_Id" />
-          </Key>
-          <Property Name="Slider_Image_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Slider_Image_Img" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-        </EntityType>
         <EntityType Name="cat_Karts">
           <Key>
             <PropertyRef Name="Kart_Id" />
@@ -313,9 +291,6 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="CMS_BusgarageEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="cat_About_Us_Sections" EntityType="Self.cat_About_Us_Sections" />
-          <EntitySet Name="cat_Offers_Image" EntityType="Self.cat_Offers_Image" />
-          <EntitySet Name="cat_Slider_Images" EntityType="Self.cat_Slider_Images" />
           <EntitySet Name="cat_Karts" EntityType="Self.cat_Karts" />
           <EntitySet Name="cat_Orders" EntityType="Self.cat_Orders" />
           <EntitySet Name="cat_Products" EntityType="Self.cat_Products" />
@@ -339,6 +314,9 @@
             <End Role="cat_Products" EntitySet="cat_Products" />
             <End Role="cat_Reviews" EntitySet="cat_Reviews" />
           </AssociationSet>
+          <EntitySet Name="cat_About_Us_Sections" EntityType="CMS_BusgarageModel.cat_About_Us_Sections" />
+          <EntitySet Name="cat_Offers_Image" EntityType="CMS_BusgarageModel.cat_Offers_Image" />
+          <EntitySet Name="cat_Slider_Images" EntityType="CMS_BusgarageModel.cat_Slider_Images" />
         </EntityContainer>
         <EntityType Name="cat_Product_Galery_Images">
           <Key>
@@ -383,37 +361,34 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="cat_About_Us_Sections">
+          <Key>
+            <PropertyRef Name="About_Us_Section_Id" />
+          </Key>
+          <Property Name="About_Us_Section_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="About_Us_Section_Title" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="About_Us_Section_Content" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="cat_Offers_Image">
+          <Key>
+            <PropertyRef Name="Offers_Banner_Id" />
+          </Key>
+          <Property Name="Offers_Banner_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Offers_Banner_Img" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="cat_Slider_Images">
+          <Key>
+            <PropertyRef Name="Slider_Image_Id" />
+          </Key>
+          <Property Name="Slider_Image_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Slider_Image_Img" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="CMS_BusgarageModelStoreContainer" CdmEntityContainer="CMS_BusgarageEntities">
-          <EntitySetMapping Name="cat_About_Us_Sections">
-            <EntityTypeMapping TypeName="CMS_BusgarageModel.cat_About_Us_Sections">
-              <MappingFragment StoreEntitySet="cat_About_Us_Sections">
-                <ScalarProperty Name="About_Us_Section_Id" ColumnName="About_Us_Section_Id" />
-                <ScalarProperty Name="About_Us_Section_Title" ColumnName="About_Us_Section_Title" />
-                <ScalarProperty Name="About_Us_Section_Content" ColumnName="About_Us_Section_Content" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="cat_Offers_Image">
-            <EntityTypeMapping TypeName="CMS_BusgarageModel.cat_Offers_Image">
-              <MappingFragment StoreEntitySet="cat_Offers_Image">
-                <ScalarProperty Name="Offers_Banner_Id" ColumnName="Offers_Banner_Id" />
-                <ScalarProperty Name="Offers_Banner_Img" ColumnName="Offers_Banner_Img" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="cat_Slider_Images">
-            <EntityTypeMapping TypeName="CMS_BusgarageModel.cat_Slider_Images">
-              <MappingFragment StoreEntitySet="cat_Slider_Images">
-                <ScalarProperty Name="Slider_Image_Id" ColumnName="Slider_Image_Id" />
-                <ScalarProperty Name="Slider_Image_Img" ColumnName="Slider_Image_Img" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="cat_Karts">
             <EntityTypeMapping TypeName="CMS_BusgarageModel.cat_Karts">
               <MappingFragment StoreEntitySet="cat_Karts">
@@ -503,6 +478,31 @@
                 <ScalarProperty Name="Review_Score" ColumnName="Review_Score" />
                 <ScalarProperty Name="Product_Id" ColumnName="Product_Id" />
                 <ScalarProperty Name="Review_Id" ColumnName="Review_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cat_About_Us_Sections">
+            <EntityTypeMapping TypeName="CMS_BusgarageModel.cat_About_Us_Sections">
+              <MappingFragment StoreEntitySet="cat_About_Us_Sections">
+                <ScalarProperty Name="About_Us_Section_Content" ColumnName="About_Us_Section_Content" />
+                <ScalarProperty Name="About_Us_Section_Title" ColumnName="About_Us_Section_Title" />
+                <ScalarProperty Name="About_Us_Section_Id" ColumnName="About_Us_Section_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cat_Offers_Image">
+            <EntityTypeMapping TypeName="CMS_BusgarageModel.cat_Offers_Image">
+              <MappingFragment StoreEntitySet="cat_Offers_Image">
+                <ScalarProperty Name="Offers_Banner_Img" ColumnName="Offers_Banner_Img" />
+                <ScalarProperty Name="Offers_Banner_Id" ColumnName="Offers_Banner_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cat_Slider_Images">
+            <EntityTypeMapping TypeName="CMS_BusgarageModel.cat_Slider_Images">
+              <MappingFragment StoreEntitySet="cat_Slider_Images">
+                <ScalarProperty Name="Slider_Image_Img" ColumnName="Slider_Image_Img" />
+                <ScalarProperty Name="Slider_Image_Id" ColumnName="Slider_Image_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
