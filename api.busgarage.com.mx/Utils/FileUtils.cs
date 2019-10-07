@@ -10,7 +10,7 @@ namespace Utils
 {
     public class FileUtils
     {
-        public static void UploadImage(HttpRequest httpRequest, HttpStatusCode statusCode , string folder, ref Dictionary<string, object> dict, ref List<string> filenames)
+        public static void UploadImage(HttpRequest httpRequest, string folder, ref HttpStatusCode statusCode, ref Dictionary<string, object> dict, ref List<string> filenames)
         {
             try
             {
@@ -75,10 +75,10 @@ namespace Utils
             }
         }
 
-        public static void ReplaceFile(string path, HttpRequest httpRequest, HttpStatusCode statusCode,string folder, ref Dictionary<string, object> dict, ref List<string> filenames)
+        public static void ReplaceFile(string path, HttpRequest httpRequest, string folder, ref HttpStatusCode statusCode, ref Dictionary<string, object> dict, ref List<string> filenames)
         {
             DeleteFile(path);
-            UploadImage(httpRequest, statusCode, folder, ref dict, ref filenames);
+            UploadImage(httpRequest, folder, ref statusCode, ref dict, ref filenames);
         }
     }
 }
