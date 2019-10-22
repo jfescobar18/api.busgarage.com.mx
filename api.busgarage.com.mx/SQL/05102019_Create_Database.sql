@@ -9,6 +9,25 @@ GO
 CREATE SCHEMA [lookup]
 GO
 
+CREATE TABLE [dbo].[cat_Admin_Login](
+	[Admin_Login_Id][int] PRIMARY KEY IDENTITY(1,1) NOT NULL,
+	[Admin_Login_Username][nvarchar](max) NOT NULL,
+	[Admin_Login_Password][nvarchar](max) NOT NULL
+)
+GO
+
+INSERT [dbo].[cat_Admin_Login]
+(
+	[Admin_Login_Username],
+	[Admin_Login_Password]
+)
+VALUES
+(
+	'support@busgarage.com.mx',
+	'C572548E4CD564C3A348AE4813502C96F8EB83E622EF28B6B0A9FEA300FE5C796F681F047DABCC3243A42C070EF6C5EFBE213A8DA3C1294CB8E38E5B3CA1A7F7'
+	--newFixPass--
+)
+
 CREATE TABLE [dbo].[cat_Slider_Images](
 	[Slider_Image_Id][int] PRIMARY KEY IDENTITY(1,1) NOT NULL,
 	[Slider_Image_Img][nvarchar](max) NOT NULL

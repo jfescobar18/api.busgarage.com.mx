@@ -35,5 +35,6 @@ namespace api.busgarage.com.mx.Entity
         public virtual DbSet<cat_About_Us_Sections> cat_About_Us_Sections { get; set; }
         public virtual DbSet<cat_Offers_Image> cat_Offers_Image { get; set; }
         public virtual DbSet<cat_Slider_Images> cat_Slider_Images { get; set; }
+        public virtual DbSet<cat_Admin_Login> cat_Admin_Login { get; set; }
     }
 }

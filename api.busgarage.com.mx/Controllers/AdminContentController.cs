@@ -18,7 +18,7 @@ namespace api.busgarage.com.mx.Controllers
         #region Slider Images
         [HttpPost]
         [Route("AdminContent/AddSliderImage")]
-        public async Task<HttpResponseMessage> AddSliderImage([FromBody] cat_Slider_Images json)
+        public async Task<HttpResponseMessage> AddSliderImage()
         {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             CMS_BusgarageEntities entity = new CMS_BusgarageEntities();
@@ -31,7 +31,7 @@ namespace api.busgarage.com.mx.Controllers
 
                 var sliderImage = new cat_Slider_Images()
                 {
-                    Slider_Image_Img = filenames[0]
+                    Slider_Image_Img = "SliderImages/" + filenames[0]
                 };
 
                 entity.cat_Slider_Images.Add(sliderImage);
@@ -47,8 +47,8 @@ namespace api.busgarage.com.mx.Controllers
         }
 
         [HttpPost]
-        [Route("AdminContent/UpdateSliderImage")]
-        public async Task<HttpResponseMessage> UpdateSliderImage([FromBody] cat_Slider_Images json)
+        [Route("AdminContent/UpdateSliderImage/{Slider_Image_Id}")]
+        public async Task<HttpResponseMessage> UpdateSliderImage(int Slider_Image_Id)
         {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             CMS_BusgarageEntities entity = new CMS_BusgarageEntities();
@@ -57,11 +57,11 @@ namespace api.busgarage.com.mx.Controllers
 
             try
             {
-                var sliderImage = entity.cat_Slider_Images.SingleOrDefault(x => x.Slider_Image_Id == json.Slider_Image_Id);
+                var sliderImage = entity.cat_Slider_Images.SingleOrDefault(x => x.Slider_Image_Id == Slider_Image_Id);
 
                 FileUtils.ReplaceFile(sliderImage.Slider_Image_Img, HttpContext.Current.Request, "SliderImages", ref statusCode, ref dict, ref filenames);
 
-                sliderImage.Slider_Image_Img = filenames[0];
+                sliderImage.Slider_Image_Img = "SliderImages/" + filenames[0];
                 entity.SaveChanges();
             }
             catch (Exception ex)
@@ -74,8 +74,8 @@ namespace api.busgarage.com.mx.Controllers
         }
 
         [HttpPost]
-        [Route("AdminContent/DeleteSliderImage")]
-        public async Task<HttpResponseMessage> DeleteSliderImage([FromBody] int Slider_Image_Id)
+        [Route("AdminContent/DeleteSliderImage/{Slider_Image_Id}")]
+        public async Task<HttpResponseMessage> DeleteSliderImage(int Slider_Image_Id)
         {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             CMS_BusgarageEntities entity = new CMS_BusgarageEntities();
@@ -175,8 +175,8 @@ namespace api.busgarage.com.mx.Controllers
         }
 
         [HttpPost]
-        [Route("AdminContent/DeleteAboutUsSection")]
-        public async Task<HttpResponseMessage> DeleteAboutUsSection([FromBody] int About_Us_Section_Id)
+        [Route("AdminContent/DeleteAboutUsSection/{About_Us_Section_Id}")]
+        public async Task<HttpResponseMessage> DeleteAboutUsSection(int About_Us_Section_Id)
         {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             CMS_BusgarageEntities entity = new CMS_BusgarageEntities();
@@ -232,7 +232,7 @@ namespace api.busgarage.com.mx.Controllers
 
                     offersImage = new cat_Offers_Image()
                     {
-                        Offers_Banner_Img = filenames[0]
+                        Offers_Banner_Img = "OfferImage/" + filenames[0]
                     };
 
                     entity.cat_Offers_Image.Add(offersImage);
@@ -241,7 +241,7 @@ namespace api.busgarage.com.mx.Controllers
                 {
                     FileUtils.ReplaceFile(offersImage.Offers_Banner_Img, HttpContext.Current.Request, "OfferImage", ref statusCode, ref dict, ref filenames);
 
-                    offersImage.Offers_Banner_Img = filenames[0];
+                    offersImage.Offers_Banner_Img = "OfferImage/" + filenames[0];
                 }
                 entity.SaveChanges();
 

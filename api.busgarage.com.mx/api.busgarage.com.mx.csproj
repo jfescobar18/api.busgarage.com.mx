@@ -147,9 +147,13 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AdminContentController.cs" />
+    <Compile Include="Controllers\AdminCredentialsController.cs" />
     <Compile Include="Controllers\AdminProducController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Entity\cat_About_Us_Sections.cs">
+      <DependentUpon>CMS_Busgarage.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\cat_Admin_Login.cs">
       <DependentUpon>CMS_Busgarage.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\cat_Categories.cs">
@@ -199,6 +203,7 @@
     </Compile>
     <Compile Include="MessageHandlers\APIKeyMessageHandlercs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\CredentialUtils.cs" />
     <Compile Include="Utils\FileUtils.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -74,8 +74,8 @@ namespace api.busgarage.com.mx.Controllers
         }
 
         [HttpPost]
-        [Route("AdminContent/DeleteCategory")]
-        public async Task<HttpResponseMessage> DeleteCategory([FromBody] int Category_Id)
+        [Route("AdminContent/DeleteCategory/{Category_Id}")]
+        public async Task<HttpResponseMessage> DeleteCategory(int Category_Id)
         {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             CMS_BusgarageEntities entity = new CMS_BusgarageEntities();

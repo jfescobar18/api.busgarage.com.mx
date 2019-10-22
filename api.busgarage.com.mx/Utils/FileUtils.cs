@@ -14,6 +14,11 @@ namespace Utils
         {
             try
             {
+                if(!Directory.Exists(HttpContext.Current.Server.MapPath($"~/{folder}")))
+                {
+                    Directory.CreateDirectory(HttpContext.Current.Server.MapPath($"~/{folder}"));
+                }
+
                 if (httpRequest.Files.Count > 0)
                 {
                     foreach (string file in httpRequest.Files)

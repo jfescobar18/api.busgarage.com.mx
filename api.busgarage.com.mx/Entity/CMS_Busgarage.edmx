@@ -13,6 +13,14 @@
           <Property Name="About_Us_Section_Title" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="About_Us_Section_Content" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
+        <EntityType Name="cat_Admin_Login">
+          <Key>
+            <PropertyRef Name="Admin_Login_Id" />
+          </Key>
+          <Property Name="Admin_Login_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Admin_Login_Username" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Admin_Login_Password" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
         <EntityType Name="cat_Karts">
           <Key>
             <PropertyRef Name="Kart_Id" />
@@ -162,6 +170,7 @@
         </Association>
         <EntityContainer Name="CMS_BusgarageModelStoreContainer">
           <EntitySet Name="cat_About_Us_Sections" EntityType="Self.cat_About_Us_Sections" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cat_Admin_Login" EntityType="Self.cat_Admin_Login" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cat_Karts" EntityType="Self.cat_Karts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cat_Offers_Image" EntityType="Self.cat_Offers_Image" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cat_Orders" EntityType="Self.cat_Orders" Schema="dbo" store:Type="Tables" />
@@ -317,6 +326,7 @@
           <EntitySet Name="cat_About_Us_Sections" EntityType="CMS_BusgarageModel.cat_About_Us_Sections" />
           <EntitySet Name="cat_Offers_Image" EntityType="CMS_BusgarageModel.cat_Offers_Image" />
           <EntitySet Name="cat_Slider_Images" EntityType="CMS_BusgarageModel.cat_Slider_Images" />
+          <EntitySet Name="cat_Admin_Login" EntityType="CMS_BusgarageModel.cat_Admin_Login" />
         </EntityContainer>
         <EntityType Name="cat_Product_Galery_Images">
           <Key>
@@ -382,6 +392,14 @@
           </Key>
           <Property Name="Slider_Image_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Slider_Image_Img" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="cat_Admin_Login">
+          <Key>
+            <PropertyRef Name="Admin_Login_Id" />
+          </Key>
+          <Property Name="Admin_Login_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Admin_Login_Username" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Admin_Login_Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -503,6 +521,15 @@
               <MappingFragment StoreEntitySet="cat_Slider_Images">
                 <ScalarProperty Name="Slider_Image_Img" ColumnName="Slider_Image_Img" />
                 <ScalarProperty Name="Slider_Image_Id" ColumnName="Slider_Image_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cat_Admin_Login">
+            <EntityTypeMapping TypeName="CMS_BusgarageModel.cat_Admin_Login">
+              <MappingFragment StoreEntitySet="cat_Admin_Login">
+                <ScalarProperty Name="Admin_Login_Password" ColumnName="Admin_Login_Password" />
+                <ScalarProperty Name="Admin_Login_Username" ColumnName="Admin_Login_Username" />
+                <ScalarProperty Name="Admin_Login_Id" ColumnName="Admin_Login_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
