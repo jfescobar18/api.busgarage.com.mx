@@ -120,6 +120,30 @@
           <Property Name="Category_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Category_Name" Type="nvarchar" MaxLength="255" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'CMS_Busgarage.dbo.vw_Products' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_Products">
+          <Key>
+            <PropertyRef Name="Product_Id" />
+            <PropertyRef Name="Product_Name" />
+            <PropertyRef Name="Product_Price" />
+            <PropertyRef Name="Product_Img" />
+            <PropertyRef Name="Product_Description" />
+            <PropertyRef Name="Product_Configurations" />
+            <PropertyRef Name="Product_Stock" />
+          </Key>
+          <Property Name="Product_Id" Type="int" Nullable="false" />
+          <Property Name="Product_Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Product_Price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Product_Disscount" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="Category_Id" Type="int" />
+          <Property Name="Category_Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="Product_Img" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Product_Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Product_Configurations" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Product_Creation_Date" Type="datetime" />
+          <Property Name="Product_Stock" Type="int" Nullable="false" />
+        </EntityType>
         <Association Name="FK__cat_Order__Kart___20C1E124">
           <End Role="cat_Karts" Type="Self.cat_Karts" Multiplicity="1" />
           <End Role="cat_Orders" Type="Self.cat_Orders" Multiplicity="*" />
@@ -180,6 +204,21 @@
           <EntitySet Name="cat_Sepomex" EntityType="Self.cat_Sepomex" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cat_Slider_Images" EntityType="Self.cat_Slider_Images" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cat_Categories" EntityType="Self.cat_Categories" Schema="lookup" store:Type="Tables" />
+          <EntitySet Name="vw_Products" EntityType="Self.vw_Products" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_Products].[Product_Id] AS [Product_Id], 
+    [vw_Products].[Product_Name] AS [Product_Name], 
+    [vw_Products].[Product_Price] AS [Product_Price], 
+    [vw_Products].[Product_Disscount] AS [Product_Disscount], 
+    [vw_Products].[Category_Id] AS [Category_Id], 
+    [vw_Products].[Category_Name] AS [Category_Name], 
+    [vw_Products].[Product_Img] AS [Product_Img], 
+    [vw_Products].[Product_Description] AS [Product_Description], 
+    [vw_Products].[Product_Configurations] AS [Product_Configurations], 
+    [vw_Products].[Product_Creation_Date] AS [Product_Creation_Date], 
+    [vw_Products].[Product_Stock] AS [Product_Stock]
+    FROM [dbo].[vw_Products] AS [vw_Products]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK__cat_Order__Kart___20C1E124" Association="Self.FK__cat_Order__Kart___20C1E124">
             <End Role="cat_Karts" EntitySet="cat_Karts" />
             <End Role="cat_Orders" EntitySet="cat_Orders" />
@@ -327,6 +366,7 @@
           <EntitySet Name="cat_Offers_Image" EntityType="CMS_BusgarageModel.cat_Offers_Image" />
           <EntitySet Name="cat_Slider_Images" EntityType="CMS_BusgarageModel.cat_Slider_Images" />
           <EntitySet Name="cat_Admin_Login" EntityType="CMS_BusgarageModel.cat_Admin_Login" />
+          <EntitySet Name="vw_Products" EntityType="CMS_BusgarageModel.vw_Products" />
         </EntityContainer>
         <EntityType Name="cat_Product_Galery_Images">
           <Key>
@@ -400,6 +440,28 @@
           <Property Name="Admin_Login_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Admin_Login_Username" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Admin_Login_Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="vw_Products">
+          <Key>
+            <PropertyRef Name="Product_Id" />
+            <PropertyRef Name="Product_Name" />
+            <PropertyRef Name="Product_Price" />
+            <PropertyRef Name="Product_Img" />
+            <PropertyRef Name="Product_Description" />
+            <PropertyRef Name="Product_Configurations" />
+            <PropertyRef Name="Product_Stock" />
+          </Key>
+          <Property Name="Product_Id" Type="Int32" Nullable="false" />
+          <Property Name="Product_Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Product_Price" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="Product_Disscount" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="Category_Id" Type="Int32" />
+          <Property Name="Category_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Product_Img" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Product_Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Product_Configurations" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Product_Creation_Date" Type="DateTime" Precision="3" />
+          <Property Name="Product_Stock" Type="Int32" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -530,6 +592,23 @@
                 <ScalarProperty Name="Admin_Login_Password" ColumnName="Admin_Login_Password" />
                 <ScalarProperty Name="Admin_Login_Username" ColumnName="Admin_Login_Username" />
                 <ScalarProperty Name="Admin_Login_Id" ColumnName="Admin_Login_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_Products">
+            <EntityTypeMapping TypeName="CMS_BusgarageModel.vw_Products">
+              <MappingFragment StoreEntitySet="vw_Products">
+                <ScalarProperty Name="Product_Stock" ColumnName="Product_Stock" />
+                <ScalarProperty Name="Product_Creation_Date" ColumnName="Product_Creation_Date" />
+                <ScalarProperty Name="Product_Configurations" ColumnName="Product_Configurations" />
+                <ScalarProperty Name="Product_Description" ColumnName="Product_Description" />
+                <ScalarProperty Name="Product_Img" ColumnName="Product_Img" />
+                <ScalarProperty Name="Category_Name" ColumnName="Category_Name" />
+                <ScalarProperty Name="Category_Id" ColumnName="Category_Id" />
+                <ScalarProperty Name="Product_Disscount" ColumnName="Product_Disscount" />
+                <ScalarProperty Name="Product_Price" ColumnName="Product_Price" />
+                <ScalarProperty Name="Product_Name" ColumnName="Product_Name" />
+                <ScalarProperty Name="Product_Id" ColumnName="Product_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

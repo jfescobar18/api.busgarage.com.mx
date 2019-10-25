@@ -1,4 +1,5 @@
 ﻿using api.busgarage.com.mx.Entity;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -114,7 +115,7 @@ namespace api.busgarage.com.mx.Controllers
         #region Products
         [HttpPost]
         [Route("AdminContent/AddProduct")]
-        public async Task<HttpResponseMessage> AddProduct([FromBody] cat_Products json)
+        public async Task<HttpResponseMessage> AddProduct()
         {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             CMS_BusgarageEntities entity = new CMS_BusgarageEntities();
@@ -123,6 +124,9 @@ namespace api.busgarage.com.mx.Controllers
 
             try
             {
+                string jsonString = HttpContext.Current.Request.Form[0];
+                cat_Products json = JsonConvert.DeserializeObject<cat_Products>(jsonString);
+
                 FileUtils.UploadImage(HttpContext.Current.Request, "ProductImages", ref statusCode, ref dict, ref filenames);
 
                 var product = new cat_Products()
@@ -131,7 +135,7 @@ namespace api.busgarage.com.mx.Controllers
                     Product_Price = json.Product_Price,
                     Product_Disscount = json.Product_Disscount,
                     Category_Id = json.Category_Id,
-                    Product_Img = filenames[0],
+                    Product_Img = "ProductImages/" + filenames[0],
                     Product_Description = json.Product_Description,
                     Product_Configurations = json.Product_Configurations,
                     Product_Creation_Date = DateTime.Now,
@@ -166,7 +170,7 @@ namespace api.busgarage.com.mx.Controllers
                 if(HttpContext.Current.Request.Files.Count > 0)
                 {
                     FileUtils.ReplaceFile(product.Product_Img, HttpContext.Current.Request, "ProductImages", ref statusCode, ref dict, ref filenames);
-                    product.Product_Img = filenames[0];
+                    product.Product_Img = "ProductImages/" + filenames[0];
                 }
 
                 product.Product_Name = json.Product_Name;
@@ -220,12 +224,12 @@ namespace api.busgarage.com.mx.Controllers
 
         [HttpGet]
         [Route("AdminContent/GetProducts")]
-        public async Task<List<cat_Products>> GetProducts()
+        public async Task<List<vw_Products>> GetProducts()
         {
             CMS_BusgarageEntities entity = new CMS_BusgarageEntities();
 
             await Task.CompletedTask;
-            return entity.cat_Products.ToList();
+            return entity.vw_Products.ToList();
         }
         #endregion
 

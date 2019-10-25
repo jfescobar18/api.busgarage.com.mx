@@ -14,7 +14,7 @@ namespace Utils
         {
             try
             {
-                if(!Directory.Exists(HttpContext.Current.Server.MapPath($"~/{folder}")))
+                if (!Directory.Exists(HttpContext.Current.Server.MapPath($"~/{folder}")))
                 {
                     Directory.CreateDirectory(HttpContext.Current.Server.MapPath($"~/{folder}"));
                 }

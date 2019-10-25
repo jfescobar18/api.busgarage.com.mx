@@ -116,3 +116,23 @@ CREATE TABLE [dbo].[cat_Product_Galery_Images](
 	[Product_Galery_Image_Img] [nvarchar](max) NOT NULL,
 	[Product_Galery_Image_Order] [int] NOT NULL
 )
+GO
+
+CREATE VIEW [dbo].[vw_Products]
+AS
+	SELECT
+		[Product_Id],
+		[Product_Name],
+		[Product_Price],
+		[Product_Disscount],
+		[dbo].[cat_Products].[Category_Id],
+		[lookup].[cat_Categories].[Category_Name],
+		[Product_Img],
+		[Product_Description],
+		[Product_Configurations],
+		[Product_Creation_Date],
+		[Product_Stock]
+	FROM [dbo].[cat_Products]
+	INNER JOIN [lookup].[cat_Categories]
+	ON [dbo].[cat_Products].[Category_Id] = [lookup].[cat_Categories].[Category_Id]
+GO
