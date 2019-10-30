@@ -1,4 +1,5 @@
 ﻿using api.busgarage.com.mx.Entity;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,8 +48,8 @@ namespace api.busgarage.com.mx.Controllers
         }
 
         [HttpPost]
-        [Route("AdminContent/UpdateSliderImage/{Slider_Image_Id}")]
-        public async Task<HttpResponseMessage> UpdateSliderImage(int Slider_Image_Id)
+        [Route("AdminContent/UpdateSliderImage")]
+        public async Task<HttpResponseMessage> UpdateSliderImage()
         {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             CMS_BusgarageEntities entity = new CMS_BusgarageEntities();
@@ -57,7 +58,10 @@ namespace api.busgarage.com.mx.Controllers
 
             try
             {
-                var sliderImage = entity.cat_Slider_Images.SingleOrDefault(x => x.Slider_Image_Id == Slider_Image_Id);
+                string jsonString = HttpContext.Current.Request.Form[0];
+                cat_Slider_Images json = JsonConvert.DeserializeObject<cat_Slider_Images>(jsonString);
+
+                var sliderImage = entity.cat_Slider_Images.SingleOrDefault(x => x.Slider_Image_Id == json.Slider_Image_Id);
 
                 FileUtils.ReplaceFile(sliderImage.Slider_Image_Img, HttpContext.Current.Request, "SliderImages", ref statusCode, ref dict, ref filenames);
 
@@ -74,8 +78,8 @@ namespace api.busgarage.com.mx.Controllers
         }
 
         [HttpPost]
-        [Route("AdminContent/DeleteSliderImage/{Slider_Image_Id}")]
-        public async Task<HttpResponseMessage> DeleteSliderImage(int Slider_Image_Id)
+        [Route("AdminContent/DeleteSliderImage")]
+        public async Task<HttpResponseMessage> DeleteSliderImage([FromBody]cat_Slider_Images json)
         {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             CMS_BusgarageEntities entity = new CMS_BusgarageEntities();
@@ -83,7 +87,7 @@ namespace api.busgarage.com.mx.Controllers
 
             try
             {
-                var sliderImage = entity.cat_Slider_Images.SingleOrDefault(x => x.Slider_Image_Id == Slider_Image_Id);
+                var sliderImage = entity.cat_Slider_Images.SingleOrDefault(x => x.Slider_Image_Id == json.Slider_Image_Id);
 
                 FileUtils.DeleteFile(sliderImage.Slider_Image_Img);
 
@@ -175,8 +179,8 @@ namespace api.busgarage.com.mx.Controllers
         }
 
         [HttpPost]
-        [Route("AdminContent/DeleteAboutUsSection/{About_Us_Section_Id}")]
-        public async Task<HttpResponseMessage> DeleteAboutUsSection(int About_Us_Section_Id)
+        [Route("AdminContent/DeleteAboutUsSection")]
+        public async Task<HttpResponseMessage> DeleteAboutUsSection([FromBody] cat_About_Us_Sections json)
         {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             CMS_BusgarageEntities entity = new CMS_BusgarageEntities();
@@ -184,7 +188,7 @@ namespace api.busgarage.com.mx.Controllers
 
             try
             {
-                var aboutUsSection = entity.cat_About_Us_Sections.SingleOrDefault(x => x.About_Us_Section_Id == About_Us_Section_Id);
+                var aboutUsSection = entity.cat_About_Us_Sections.SingleOrDefault(x => x.About_Us_Section_Id == json.About_Us_Section_Id);
 
                 entity.cat_About_Us_Sections.Remove(aboutUsSection);
                 entity.SaveChanges();

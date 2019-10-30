@@ -28,7 +28,6 @@ namespace api.busgarage.com.mx.Entity
     
         public virtual DbSet<cat_Karts> cat_Karts { get; set; }
         public virtual DbSet<cat_Orders> cat_Orders { get; set; }
-        public virtual DbSet<cat_Products> cat_Products { get; set; }
         public virtual DbSet<cat_Sepomex> cat_Sepomex { get; set; }
         public virtual DbSet<cat_Categories> cat_Categories { get; set; }
         public virtual DbSet<cat_Product_Galery_Images> cat_Product_Galery_Images { get; set; }
@@ -37,6 +36,7 @@ namespace api.busgarage.com.mx.Entity
         public virtual DbSet<cat_Offers_Image> cat_Offers_Image { get; set; }
         public virtual DbSet<cat_Slider_Images> cat_Slider_Images { get; set; }
         public virtual DbSet<cat_Admin_Login> cat_Admin_Login { get; set; }
+        public virtual DbSet<cat_Products> cat_Products { get; set; }
         public virtual DbSet<vw_Products> vw_Products { get; set; }
     }
 }

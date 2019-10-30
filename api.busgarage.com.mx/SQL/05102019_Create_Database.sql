@@ -63,9 +63,11 @@ CREATE TABLE [dbo].[cat_Products](
 	[Product_Description][nvarchar](max) NOT NULL,
 	[Product_Configurations][nvarchar](max) NOT NULL,
 	[Product_Creation_Date][datetime] DEFAULT(GETDATE()),
+	[Product_Released][bit] NOT NULL,
 	[Product_Stock][int] NOT NULL
 )
 GO
+
 
 CREATE TABLE [dbo].[cat_Sepomex](
 	[d_codigo][int] PRIMARY KEY IDENTITY(1,1) NOT NULL,
@@ -118,7 +120,14 @@ CREATE TABLE [dbo].[cat_Product_Galery_Images](
 )
 GO
 
-CREATE VIEW [dbo].[vw_Products]
+CREATE TABLE [dbo].[cat_Reviews](
+	[Review_Id] [int] IDENTITY(1,1) NOT NULL,
+	[Product_Id] [int] NOT NULL FOREIGN KEY REFERENCES [dbo].[cat_Products] ([Product_Id]),
+	[Review_Score] [int] NOT NULL
+)
+GO
+
+ALTER VIEW [dbo].[vw_Products]
 AS
 	SELECT
 		[Product_Id],
@@ -131,7 +140,16 @@ AS
 		[Product_Description],
 		[Product_Configurations],
 		[Product_Creation_Date],
-		[Product_Stock]
+		[Product_Released],
+		[Product_Stock],
+		ISNULL((SELECT ROUND(AVG(CAST(Review_Score AS DECIMAL(12,2))), 2) FROM [cat_Reviews] WHERE [cat_Reviews].[Product_Id] = [cat_Products].[Product_Id]), 0) AS [Product_Ranking],
+		[Product_Price] - ([Product_Price] * ([Product_Disscount] / 100)) AS [Product_Price_Total],
+		CAST(
+             CASE
+                  WHEN DATEDIFF(year, [Product_Creation_Date], GETDATE()) > 30
+                     THEN 0
+                  ELSE 1
+             END AS [bit]) AS [Product_Is_New]
 	FROM [dbo].[cat_Products]
 	INNER JOIN [lookup].[cat_Categories]
 	ON [dbo].[cat_Products].[Category_Id] = [lookup].[cat_Categories].[Category_Id]

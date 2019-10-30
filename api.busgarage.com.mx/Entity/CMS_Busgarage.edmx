@@ -54,9 +54,14 @@
           <Property Name="Order_Creation_Date" Type="datetime" Nullable="false" />
           <Property Name="Order_Delivered_Date" Type="datetime" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'CMS_Busgarage.dbo.cat_Product_Galery_Images' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="cat_Product_Galery_Images">
           <Key>
             <PropertyRef Name="Product_Galery_Image_Id" />
+            
+            
+            
           </Key>
           <Property Name="Product_Galery_Image_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Product_Id" Type="int" Nullable="false" />
@@ -76,11 +81,16 @@
           <Property Name="Product_Description" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Product_Configurations" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Product_Creation_Date" Type="datetime" />
+          <Property Name="Product_Released" Type="bit" Nullable="false" />
           <Property Name="Product_Stock" Type="int" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'CMS_Busgarage.dbo.cat_Reviews' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="cat_Reviews">
           <Key>
             <PropertyRef Name="Review_Id" />
+            
+            
           </Key>
           <Property Name="Review_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Product_Id" Type="int" Nullable="false" />
@@ -130,7 +140,9 @@ warning 6002: The table/view 'CMS_Busgarage.dbo.vw_Products' does not have a pri
             <PropertyRef Name="Product_Img" />
             <PropertyRef Name="Product_Description" />
             <PropertyRef Name="Product_Configurations" />
+            <PropertyRef Name="Product_Released" />
             <PropertyRef Name="Product_Stock" />
+            <PropertyRef Name="Product_Ranking" />
           </Key>
           <Property Name="Product_Id" Type="int" Nullable="false" />
           <Property Name="Product_Name" Type="nvarchar(max)" Nullable="false" />
@@ -142,9 +154,13 @@ warning 6002: The table/view 'CMS_Busgarage.dbo.vw_Products' does not have a pri
           <Property Name="Product_Description" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Product_Configurations" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Product_Creation_Date" Type="datetime" />
+          <Property Name="Product_Released" Type="bit" Nullable="false" />
           <Property Name="Product_Stock" Type="int" Nullable="false" />
+          <Property Name="Product_Ranking" Type="decimal" Precision="38" Scale="6" Nullable="false" />
+          <Property Name="Product_Price_Total" Type="decimal" Precision="26" Scale="8" />
+          <Property Name="Product_Is_New" Type="bit" />
         </EntityType>
-        <Association Name="FK__cat_Order__Kart___20C1E124">
+        <Association Name="FK__cat_Order__Kart___4E88ABD4">
           <End Role="cat_Karts" Type="Self.cat_Karts" Multiplicity="1" />
           <End Role="cat_Orders" Type="Self.cat_Orders" Multiplicity="*" />
           <ReferentialConstraint>
@@ -156,7 +172,7 @@ warning 6002: The table/view 'CMS_Busgarage.dbo.vw_Products' does not have a pri
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__cat_Produ__Categ__182C9B23">
+        <Association Name="FK__cat_Produ__Categ__5812160E">
           <End Role="cat_Categories" Type="Self.cat_Categories" Multiplicity="0..1" />
           <End Role="cat_Products" Type="Self.cat_Products" Multiplicity="*" />
           <ReferentialConstraint>
@@ -168,7 +184,7 @@ warning 6002: The table/view 'CMS_Busgarage.dbo.vw_Products' does not have a pri
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__cat_Produ__Produ__286302EC">
+        <Association Name="FK__cat_Produ__Produ__5AEE82B9">
           <End Role="cat_Products" Type="Self.cat_Products" Multiplicity="1" />
           <End Role="cat_Product_Galery_Images" Type="Self.cat_Product_Galery_Images" Multiplicity="*" />
           <ReferentialConstraint>
@@ -180,7 +196,7 @@ warning 6002: The table/view 'CMS_Busgarage.dbo.vw_Products' does not have a pri
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__cat_Revie__Produ__24927208">
+        <Association Name="FK__cat_Revie__Produ__5CD6CB2B">
           <End Role="cat_Products" Type="Self.cat_Products" Multiplicity="1" />
           <End Role="cat_Reviews" Type="Self.cat_Reviews" Multiplicity="*" />
           <ReferentialConstraint>
@@ -198,12 +214,25 @@ warning 6002: The table/view 'CMS_Busgarage.dbo.vw_Products' does not have a pri
           <EntitySet Name="cat_Karts" EntityType="Self.cat_Karts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cat_Offers_Image" EntityType="Self.cat_Offers_Image" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cat_Orders" EntityType="Self.cat_Orders" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="cat_Product_Galery_Images" EntityType="Self.cat_Product_Galery_Images" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cat_Products" EntityType="Self.cat_Products" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="cat_Reviews" EntityType="Self.cat_Reviews" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cat_Sepomex" EntityType="Self.cat_Sepomex" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cat_Slider_Images" EntityType="Self.cat_Slider_Images" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cat_Categories" EntityType="Self.cat_Categories" Schema="lookup" store:Type="Tables" />
+          <EntitySet Name="cat_Product_Galery_Images" EntityType="Self.cat_Product_Galery_Images" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [cat_Product_Galery_Images].[Product_Galery_Image_Id] AS [Product_Galery_Image_Id], 
+    [cat_Product_Galery_Images].[Product_Id] AS [Product_Id], 
+    [cat_Product_Galery_Images].[Product_Galery_Image_Img] AS [Product_Galery_Image_Img], 
+    [cat_Product_Galery_Images].[Product_Galery_Image_Order] AS [Product_Galery_Image_Order]
+    FROM [dbo].[cat_Product_Galery_Images] AS [cat_Product_Galery_Images]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="cat_Reviews" EntityType="Self.cat_Reviews" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [cat_Reviews].[Review_Id] AS [Review_Id], 
+    [cat_Reviews].[Product_Id] AS [Product_Id], 
+    [cat_Reviews].[Review_Score] AS [Review_Score]
+    FROM [dbo].[cat_Reviews] AS [cat_Reviews]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vw_Products" EntityType="Self.vw_Products" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vw_Products].[Product_Id] AS [Product_Id], 
@@ -216,22 +245,26 @@ warning 6002: The table/view 'CMS_Busgarage.dbo.vw_Products' does not have a pri
     [vw_Products].[Product_Description] AS [Product_Description], 
     [vw_Products].[Product_Configurations] AS [Product_Configurations], 
     [vw_Products].[Product_Creation_Date] AS [Product_Creation_Date], 
-    [vw_Products].[Product_Stock] AS [Product_Stock]
+    [vw_Products].[Product_Released] AS [Product_Released], 
+    [vw_Products].[Product_Stock] AS [Product_Stock], 
+    [vw_Products].[Product_Ranking] AS [Product_Ranking], 
+    [vw_Products].[Product_Price_Total] AS [Product_Price_Total], 
+    [vw_Products].[Product_Is_New] AS [Product_Is_New]
     FROM [dbo].[vw_Products] AS [vw_Products]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__cat_Order__Kart___20C1E124" Association="Self.FK__cat_Order__Kart___20C1E124">
+          <AssociationSet Name="FK__cat_Order__Kart___4E88ABD4" Association="Self.FK__cat_Order__Kart___4E88ABD4">
             <End Role="cat_Karts" EntitySet="cat_Karts" />
             <End Role="cat_Orders" EntitySet="cat_Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK__cat_Produ__Categ__182C9B23" Association="Self.FK__cat_Produ__Categ__182C9B23">
+          <AssociationSet Name="FK__cat_Produ__Categ__5812160E" Association="Self.FK__cat_Produ__Categ__5812160E">
             <End Role="cat_Categories" EntitySet="cat_Categories" />
             <End Role="cat_Products" EntitySet="cat_Products" />
           </AssociationSet>
-          <AssociationSet Name="FK__cat_Produ__Produ__286302EC" Association="Self.FK__cat_Produ__Produ__286302EC">
+          <AssociationSet Name="FK__cat_Produ__Produ__5AEE82B9" Association="Self.FK__cat_Produ__Produ__5AEE82B9">
             <End Role="cat_Products" EntitySet="cat_Products" />
             <End Role="cat_Product_Galery_Images" EntitySet="cat_Product_Galery_Images" />
           </AssociationSet>
-          <AssociationSet Name="FK__cat_Revie__Produ__24927208" Association="Self.FK__cat_Revie__Produ__24927208">
+          <AssociationSet Name="FK__cat_Revie__Produ__5CD6CB2B" Association="Self.FK__cat_Revie__Produ__5CD6CB2B">
             <End Role="cat_Products" EntitySet="cat_Products" />
             <End Role="cat_Reviews" EntitySet="cat_Reviews" />
           </AssociationSet>
@@ -268,24 +301,6 @@ warning 6002: The table/view 'CMS_Busgarage.dbo.vw_Products' does not have a pri
           <Property Name="Order_Delivered_Date" Type="DateTime" Precision="3" />
           <NavigationProperty Name="cat_Karts" Relationship="Self.FK__cat_Order__Kart___20C1E124" FromRole="cat_Orders" ToRole="cat_Karts" />
         </EntityType>
-        <EntityType Name="cat_Products">
-          <Key>
-            <PropertyRef Name="Product_Id" />
-          </Key>
-          <Property Name="Product_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Product_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Product_Price" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="Product_Disscount" Type="Decimal" Precision="10" Scale="2" />
-          <Property Name="Category_Id" Type="Int32" />
-          <Property Name="Product_Img" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Product_Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Product_Configurations" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Product_Creation_Date" Type="DateTime" Precision="3" />
-          <Property Name="Product_Stock" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="cat_Categories" Relationship="Self.FK__cat_Produ__Categ__182C9B23" FromRole="cat_Products" ToRole="cat_Categories" />
-          <NavigationProperty Name="cat_Product_Galery_Images" Relationship="CMS_BusgarageModel.FK__cat_Produ__Produ__286302EC" FromRole="cat_Products" ToRole="cat_Product_Galery_Images" />
-          <NavigationProperty Name="cat_Reviews" Relationship="CMS_BusgarageModel.FK__cat_Revie__Produ__24927208" FromRole="cat_Products" ToRole="cat_Reviews" />
-        </EntityType>
         <EntityType Name="cat_Sepomex">
           <Key>
             <PropertyRef Name="d_codigo" />
@@ -312,7 +327,7 @@ warning 6002: The table/view 'CMS_Busgarage.dbo.vw_Products' does not have a pri
           </Key>
           <Property Name="Category_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Category_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="cat_Products" Relationship="Self.FK__cat_Produ__Categ__182C9B23" FromRole="cat_Categories" ToRole="cat_Products" />
+          <NavigationProperty Name="cat_Products" Relationship="CMS_BusgarageModel.FK__cat_Produ__Categ__5812160E" FromRole="cat_Categories" ToRole="cat_Products" />
         </EntityType>
         <Association Name="FK__cat_Order__Kart___20C1E124">
           <End Role="cat_Karts" Type="Self.cat_Karts" Multiplicity="1" />
@@ -326,48 +341,36 @@ warning 6002: The table/view 'CMS_Busgarage.dbo.vw_Products' does not have a pri
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__cat_Produ__Categ__182C9B23">
-          <End Role="cat_Categories" Type="Self.cat_Categories" Multiplicity="0..1" />
-          <End Role="cat_Products" Type="Self.cat_Products" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="cat_Categories">
-              <PropertyRef Name="Category_Id" />
-            </Principal>
-            <Dependent Role="cat_Products">
-              <PropertyRef Name="Category_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="CMS_BusgarageEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="cat_Karts" EntityType="Self.cat_Karts" />
           <EntitySet Name="cat_Orders" EntityType="Self.cat_Orders" />
-          <EntitySet Name="cat_Products" EntityType="Self.cat_Products" />
           <EntitySet Name="cat_Sepomex" EntityType="Self.cat_Sepomex" />
           <EntitySet Name="cat_Categories" EntityType="Self.cat_Categories" />
           <AssociationSet Name="FK__cat_Order__Kart___20C1E124" Association="Self.FK__cat_Order__Kart___20C1E124">
             <End Role="cat_Karts" EntitySet="cat_Karts" />
             <End Role="cat_Orders" EntitySet="cat_Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK__cat_Produ__Categ__182C9B23" Association="Self.FK__cat_Produ__Categ__182C9B23">
-            <End Role="cat_Categories" EntitySet="cat_Categories" />
-            <End Role="cat_Products" EntitySet="cat_Products" />
-          </AssociationSet>
           <EntitySet Name="cat_Product_Galery_Images" EntityType="CMS_BusgarageModel.cat_Product_Galery_Images" />
           <EntitySet Name="cat_Reviews" EntityType="CMS_BusgarageModel.cat_Reviews" />
-          <AssociationSet Name="FK__cat_Produ__Produ__286302EC" Association="CMS_BusgarageModel.FK__cat_Produ__Produ__286302EC">
-            <End Role="cat_Products" EntitySet="cat_Products" />
-            <End Role="cat_Product_Galery_Images" EntitySet="cat_Product_Galery_Images" />
-          </AssociationSet>
-          <AssociationSet Name="FK__cat_Revie__Produ__24927208" Association="CMS_BusgarageModel.FK__cat_Revie__Produ__24927208">
-            <End Role="cat_Products" EntitySet="cat_Products" />
-            <End Role="cat_Reviews" EntitySet="cat_Reviews" />
-          </AssociationSet>
           <EntitySet Name="cat_About_Us_Sections" EntityType="CMS_BusgarageModel.cat_About_Us_Sections" />
           <EntitySet Name="cat_Offers_Image" EntityType="CMS_BusgarageModel.cat_Offers_Image" />
           <EntitySet Name="cat_Slider_Images" EntityType="CMS_BusgarageModel.cat_Slider_Images" />
           <EntitySet Name="cat_Admin_Login" EntityType="CMS_BusgarageModel.cat_Admin_Login" />
+          <EntitySet Name="cat_Products" EntityType="CMS_BusgarageModel.cat_Products" />
+          <AssociationSet Name="FK__cat_Produ__Categ__5812160E" Association="CMS_BusgarageModel.FK__cat_Produ__Categ__5812160E">
+            <End Role="cat_Categories" EntitySet="cat_Categories" />
+            <End Role="cat_Products" EntitySet="cat_Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK__cat_Produ__Produ__5AEE82B9" Association="CMS_BusgarageModel.FK__cat_Produ__Produ__5AEE82B9">
+            <End Role="cat_Products" EntitySet="cat_Products" />
+            <End Role="cat_Product_Galery_Images" EntitySet="cat_Product_Galery_Images" />
+          </AssociationSet>
+          <AssociationSet Name="FK__cat_Revie__Produ__5CD6CB2B" Association="CMS_BusgarageModel.FK__cat_Revie__Produ__5CD6CB2B">
+            <End Role="cat_Products" EntitySet="cat_Products" />
+            <End Role="cat_Reviews" EntitySet="cat_Reviews" />
+          </AssociationSet>
           <EntitySet Name="vw_Products" EntityType="CMS_BusgarageModel.vw_Products" />
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="cat_Product_Galery_Images">
           <Key>
             <PropertyRef Name="Product_Galery_Image_Id" />
@@ -376,7 +379,7 @@ warning 6002: The table/view 'CMS_Busgarage.dbo.vw_Products' does not have a pri
           <Property Name="Product_Id" Type="Int32" Nullable="false" />
           <Property Name="Product_Galery_Image_Img" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Product_Galery_Image_Order" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="cat_Products" Relationship="CMS_BusgarageModel.FK__cat_Produ__Produ__286302EC" FromRole="cat_Product_Galery_Images" ToRole="cat_Products" />
+          <NavigationProperty Name="cat_Products" Relationship="CMS_BusgarageModel.FK__cat_Produ__Produ__5AEE82B9" FromRole="cat_Product_Galery_Images" ToRole="cat_Products" />
         </EntityType>
         <EntityType Name="cat_Reviews">
           <Key>
@@ -385,32 +388,8 @@ warning 6002: The table/view 'CMS_Busgarage.dbo.vw_Products' does not have a pri
           <Property Name="Review_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Product_Id" Type="Int32" Nullable="false" />
           <Property Name="Review_Score" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="cat_Products" Relationship="CMS_BusgarageModel.FK__cat_Revie__Produ__24927208" FromRole="cat_Reviews" ToRole="cat_Products" />
+          <NavigationProperty Name="cat_Products" Relationship="CMS_BusgarageModel.FK__cat_Revie__Produ__5CD6CB2B" FromRole="cat_Reviews" ToRole="cat_Products" />
         </EntityType>
-        <Association Name="FK__cat_Produ__Produ__286302EC">
-          <End Type="CMS_BusgarageModel.cat_Products" Role="cat_Products" Multiplicity="1" />
-          <End Type="CMS_BusgarageModel.cat_Product_Galery_Images" Role="cat_Product_Galery_Images" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="cat_Products">
-              <PropertyRef Name="Product_Id" />
-            </Principal>
-            <Dependent Role="cat_Product_Galery_Images">
-              <PropertyRef Name="Product_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__cat_Revie__Produ__24927208">
-          <End Type="CMS_BusgarageModel.cat_Products" Role="cat_Products" Multiplicity="1" />
-          <End Type="CMS_BusgarageModel.cat_Reviews" Role="cat_Reviews" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="cat_Products">
-              <PropertyRef Name="Product_Id" />
-            </Principal>
-            <Dependent Role="cat_Reviews">
-              <PropertyRef Name="Product_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="cat_About_Us_Sections">
           <Key>
             <PropertyRef Name="About_Us_Section_Id" />
@@ -441,6 +420,61 @@ warning 6002: The table/view 'CMS_Busgarage.dbo.vw_Products' does not have a pri
           <Property Name="Admin_Login_Username" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Admin_Login_Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="cat_Products">
+          <Key>
+            <PropertyRef Name="Product_Id" />
+          </Key>
+          <Property Name="Product_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Product_Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Product_Price" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="Product_Disscount" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="Category_Id" Type="Int32" />
+          <Property Name="Product_Img" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Product_Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Product_Configurations" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Product_Creation_Date" Type="DateTime" Precision="3" />
+          <Property Name="Product_Released" Type="Boolean" Nullable="false" />
+          <Property Name="Product_Stock" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="cat_Categories" Relationship="CMS_BusgarageModel.FK__cat_Produ__Categ__5812160E" FromRole="cat_Products" ToRole="cat_Categories" />
+          <NavigationProperty Name="cat_Product_Galery_Images" Relationship="CMS_BusgarageModel.FK__cat_Produ__Produ__5AEE82B9" FromRole="cat_Products" ToRole="cat_Product_Galery_Images" />
+          <NavigationProperty Name="cat_Reviews" Relationship="CMS_BusgarageModel.FK__cat_Revie__Produ__5CD6CB2B" FromRole="cat_Products" ToRole="cat_Reviews" />
+        </EntityType>
+        <Association Name="FK__cat_Produ__Categ__5812160E">
+          <End Type="CMS_BusgarageModel.cat_Categories" Role="cat_Categories" Multiplicity="0..1" />
+          <End Type="CMS_BusgarageModel.cat_Products" Role="cat_Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cat_Categories">
+              <PropertyRef Name="Category_Id" />
+            </Principal>
+            <Dependent Role="cat_Products">
+              <PropertyRef Name="Category_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__cat_Produ__Produ__5AEE82B9">
+          <End Type="CMS_BusgarageModel.cat_Products" Role="cat_Products" Multiplicity="1" />
+          <End Type="CMS_BusgarageModel.cat_Product_Galery_Images" Role="cat_Product_Galery_Images" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cat_Products">
+              <PropertyRef Name="Product_Id" />
+            </Principal>
+            <Dependent Role="cat_Product_Galery_Images">
+              <PropertyRef Name="Product_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__cat_Revie__Produ__5CD6CB2B">
+          <End Type="CMS_BusgarageModel.cat_Products" Role="cat_Products" Multiplicity="1" />
+          <End Type="CMS_BusgarageModel.cat_Reviews" Role="cat_Reviews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cat_Products">
+              <PropertyRef Name="Product_Id" />
+            </Principal>
+            <Dependent Role="cat_Reviews">
+              <PropertyRef Name="Product_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityType Name="vw_Products">
           <Key>
             <PropertyRef Name="Product_Id" />
@@ -449,7 +483,9 @@ warning 6002: The table/view 'CMS_Busgarage.dbo.vw_Products' does not have a pri
             <PropertyRef Name="Product_Img" />
             <PropertyRef Name="Product_Description" />
             <PropertyRef Name="Product_Configurations" />
+            <PropertyRef Name="Product_Released" />
             <PropertyRef Name="Product_Stock" />
+            <PropertyRef Name="Product_Ranking" />
           </Key>
           <Property Name="Product_Id" Type="Int32" Nullable="false" />
           <Property Name="Product_Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -461,9 +497,13 @@ warning 6002: The table/view 'CMS_Busgarage.dbo.vw_Products' does not have a pri
           <Property Name="Product_Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Product_Configurations" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Product_Creation_Date" Type="DateTime" Precision="3" />
+          <Property Name="Product_Released" Type="Boolean" Nullable="false" />
           <Property Name="Product_Stock" Type="Int32" Nullable="false" />
+          <Property Name="Product_Ranking" Type="Decimal" Nullable="false" Precision="38" Scale="6" />
+          <Property Name="Product_Price_Total" Type="Decimal" Precision="26" Scale="8" />
+          <Property Name="Product_Is_New" Type="Boolean" />
         </EntityType>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -494,22 +534,6 @@ warning 6002: The table/view 'CMS_Busgarage.dbo.vw_Products' does not have a pri
                 <ScalarProperty Name="Order_Client_Comments" ColumnName="Order_Client_Comments" />
                 <ScalarProperty Name="Order_Creation_Date" ColumnName="Order_Creation_Date" />
                 <ScalarProperty Name="Order_Delivered_Date" ColumnName="Order_Delivered_Date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="cat_Products">
-            <EntityTypeMapping TypeName="CMS_BusgarageModel.cat_Products">
-              <MappingFragment StoreEntitySet="cat_Products">
-                <ScalarProperty Name="Product_Id" ColumnName="Product_Id" />
-                <ScalarProperty Name="Product_Name" ColumnName="Product_Name" />
-                <ScalarProperty Name="Product_Price" ColumnName="Product_Price" />
-                <ScalarProperty Name="Product_Disscount" ColumnName="Product_Disscount" />
-                <ScalarProperty Name="Category_Id" ColumnName="Category_Id" />
-                <ScalarProperty Name="Product_Img" ColumnName="Product_Img" />
-                <ScalarProperty Name="Product_Description" ColumnName="Product_Description" />
-                <ScalarProperty Name="Product_Configurations" ColumnName="Product_Configurations" />
-                <ScalarProperty Name="Product_Creation_Date" ColumnName="Product_Creation_Date" />
-                <ScalarProperty Name="Product_Stock" ColumnName="Product_Stock" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -595,10 +619,31 @@ warning 6002: The table/view 'CMS_Busgarage.dbo.vw_Products' does not have a pri
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="cat_Products">
+            <EntityTypeMapping TypeName="CMS_BusgarageModel.cat_Products">
+              <MappingFragment StoreEntitySet="cat_Products">
+                <ScalarProperty Name="Product_Stock" ColumnName="Product_Stock" />
+                <ScalarProperty Name="Product_Released" ColumnName="Product_Released" />
+                <ScalarProperty Name="Product_Creation_Date" ColumnName="Product_Creation_Date" />
+                <ScalarProperty Name="Product_Configurations" ColumnName="Product_Configurations" />
+                <ScalarProperty Name="Product_Description" ColumnName="Product_Description" />
+                <ScalarProperty Name="Product_Img" ColumnName="Product_Img" />
+                <ScalarProperty Name="Category_Id" ColumnName="Category_Id" />
+                <ScalarProperty Name="Product_Disscount" ColumnName="Product_Disscount" />
+                <ScalarProperty Name="Product_Price" ColumnName="Product_Price" />
+                <ScalarProperty Name="Product_Name" ColumnName="Product_Name" />
+                <ScalarProperty Name="Product_Id" ColumnName="Product_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="vw_Products">
             <EntityTypeMapping TypeName="CMS_BusgarageModel.vw_Products">
               <MappingFragment StoreEntitySet="vw_Products">
+                <ScalarProperty Name="Product_Is_New" ColumnName="Product_Is_New" />
+                <ScalarProperty Name="Product_Price_Total" ColumnName="Product_Price_Total" />
+                <ScalarProperty Name="Product_Ranking" ColumnName="Product_Ranking" />
                 <ScalarProperty Name="Product_Stock" ColumnName="Product_Stock" />
+                <ScalarProperty Name="Product_Released" ColumnName="Product_Released" />
                 <ScalarProperty Name="Product_Creation_Date" ColumnName="Product_Creation_Date" />
                 <ScalarProperty Name="Product_Configurations" ColumnName="Product_Configurations" />
                 <ScalarProperty Name="Product_Description" ColumnName="Product_Description" />

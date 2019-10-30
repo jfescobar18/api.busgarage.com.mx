@@ -75,8 +75,8 @@ namespace api.busgarage.com.mx.Controllers
         }
 
         [HttpPost]
-        [Route("AdminContent/DeleteCategory/{Category_Id}")]
-        public async Task<HttpResponseMessage> DeleteCategory(int Category_Id)
+        [Route("AdminContent/DeleteCategory")]
+        public async Task<HttpResponseMessage> DeleteCategory([FromBody] cat_Categories json)
         {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             CMS_BusgarageEntities entity = new CMS_BusgarageEntities();
@@ -84,7 +84,7 @@ namespace api.busgarage.com.mx.Controllers
 
             try
             {
-                var category = entity.cat_Categories.SingleOrDefault(x => x.Category_Id == Category_Id);
+                var category = entity.cat_Categories.SingleOrDefault(x => x.Category_Id == json.Category_Id);
 
                 entity.cat_Categories.Remove(category);
                 entity.SaveChanges();
@@ -124,7 +124,7 @@ namespace api.busgarage.com.mx.Controllers
 
             try
             {
-                string jsonString = HttpContext.Current.Request.Form[0];
+                string jsonString = HttpContext.Current.Request.Form["cat_Products"];
                 cat_Products json = JsonConvert.DeserializeObject<cat_Products>(jsonString);
 
                 FileUtils.UploadImage(HttpContext.Current.Request, "ProductImages", ref statusCode, ref dict, ref filenames);
@@ -139,6 +139,7 @@ namespace api.busgarage.com.mx.Controllers
                     Product_Description = json.Product_Description,
                     Product_Configurations = json.Product_Configurations,
                     Product_Creation_Date = DateTime.Now,
+                    Product_Released = json.Product_Released,
                     Product_Stock = json.Product_Stock
                 };
 
@@ -156,7 +157,7 @@ namespace api.busgarage.com.mx.Controllers
 
         [HttpPost]
         [Route("AdminContent/UpdateProduct")]
-        public async Task<HttpResponseMessage> UpdateProduct([FromBody] cat_Products json)
+        public async Task<HttpResponseMessage> UpdateProduct()
         {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             CMS_BusgarageEntities entity = new CMS_BusgarageEntities();
@@ -165,9 +166,12 @@ namespace api.busgarage.com.mx.Controllers
 
             try
             {
+                string jsonString = HttpContext.Current.Request.Form["cat_Products"];
+                cat_Products json = JsonConvert.DeserializeObject<cat_Products>(jsonString);
+
                 var product = entity.cat_Products.SingleOrDefault(x => x.Product_Id == json.Product_Id);
 
-                if(HttpContext.Current.Request.Files.Count > 0)
+                if (HttpContext.Current.Request.Files.Count > 0)
                 {
                     FileUtils.ReplaceFile(product.Product_Img, HttpContext.Current.Request, "ProductImages", ref statusCode, ref dict, ref filenames);
                     product.Product_Img = "ProductImages/" + filenames[0];
@@ -180,12 +184,23 @@ namespace api.busgarage.com.mx.Controllers
                 product.Product_Description = json.Product_Description;
                 product.Product_Configurations = json.Product_Configurations;
                 product.Product_Creation_Date = DateTime.Now;
+                product.Product_Released = json.Product_Released;
                 product.Product_Stock = json.Product_Stock;
                 entity.SaveChanges();
+
+                statusCode = HttpStatusCode.OK;
+                if(dict.Keys.Count == 0)
+                {
+                    dict.Add("message", "Product updated successfully");
+                }
             }
             catch (Exception ex)
             {
-                dict.Add("message", ex.Message);
+                if (dict.Keys.Count > 0)
+                {
+                    dict = new Dictionary<string, object>();
+                    dict.Add("message", "Product updated successfully");
+                }
             }
 
             await Task.CompletedTask;
@@ -194,7 +209,7 @@ namespace api.busgarage.com.mx.Controllers
 
         [HttpPost]
         [Route("AdminContent/DeleteProduct")]
-        public async Task<HttpResponseMessage> DeleteProduct([FromBody] int Product_Id)
+        public async Task<HttpResponseMessage> DeleteProduct([FromBody] cat_Products json)
         {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             CMS_BusgarageEntities entity = new CMS_BusgarageEntities();
@@ -202,7 +217,7 @@ namespace api.busgarage.com.mx.Controllers
 
             try
             {
-                var product = entity.cat_Products.SingleOrDefault(x => x.Product_Id == Product_Id);
+                var product = entity.cat_Products.SingleOrDefault(x => x.Product_Id == json.Product_Id);
 
                 FileUtils.DeleteFile(product.Product_Img);
 
@@ -229,7 +244,47 @@ namespace api.busgarage.com.mx.Controllers
             CMS_BusgarageEntities entity = new CMS_BusgarageEntities();
 
             await Task.CompletedTask;
-            return entity.vw_Products.ToList();
+            return entity.vw_Products.OrderBy(x => x.Product_Creation_Date).ToList();
+        }
+
+        [HttpGet]
+        [Route("AdminContent/GetAllProducts")]
+        public async Task<List<vw_Products>> GetAllProducts()
+        {
+            CMS_BusgarageEntities entity = new CMS_BusgarageEntities();
+
+            await Task.CompletedTask;
+            return entity.vw_Products.Where(x => x.Product_Released == true).OrderBy(x => x.Product_Creation_Date).ToList();
+        }
+
+        [HttpGet]
+        [Route("AdminContent/GetDiscount_Products")]
+        public async Task<List<vw_Products>> GetDiscount_Products()
+        {
+            CMS_BusgarageEntities entity = new CMS_BusgarageEntities();
+
+            await Task.CompletedTask;
+            return entity.vw_Products.Where(x => x.Product_Disscount != 0).OrderBy(x => x.Product_Creation_Date).ToList();
+        }
+
+        [HttpGet]
+        [Route("AdminContent/GetNew_Products")]
+        public async Task<List<vw_Products>> GetNew_Products()
+        {
+            CMS_BusgarageEntities entity = new CMS_BusgarageEntities();
+
+            await Task.CompletedTask;
+            return entity.vw_Products.Where(x => x.Product_Is_New == true && x.Product_Released == true).OrderBy(x => x.Product_Creation_Date).ToList();
+        }
+
+        [HttpGet]
+        [Route("AdminContent/GetSoon_Products")]
+        public async Task<List<vw_Products>> GetSoon_Products()
+        {
+            CMS_BusgarageEntities entity = new CMS_BusgarageEntities();
+
+            await Task.CompletedTask;
+            return entity.vw_Products.Where(x => x.Product_Released == false).OrderBy(x => x.Product_Creation_Date).ToList();
         }
         #endregion
 
@@ -451,7 +506,7 @@ namespace api.busgarage.com.mx.Controllers
         #region Product_Galery_Images
         [HttpPost]
         [Route("AdminContent/AddProductGaleryImage")]
-        public async Task<HttpResponseMessage> AddProductGaleryImage([FromBody] cat_Product_Galery_Images json)
+        public async Task<HttpResponseMessage> AddProductGaleryImage()
         {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             CMS_BusgarageEntities entity = new CMS_BusgarageEntities();
@@ -460,12 +515,15 @@ namespace api.busgarage.com.mx.Controllers
 
             try
             {
+                string jsonString = HttpContext.Current.Request.Form["cat_Product_Galery_Images"];
+                cat_Product_Galery_Images json = JsonConvert.DeserializeObject<cat_Product_Galery_Images>(jsonString);
+
                 FileUtils.UploadImage(HttpContext.Current.Request, "ProductGaleryImageImages", ref statusCode, ref dict, ref filenames);
 
                 var productGaleryImage = new cat_Product_Galery_Images()
                 {
                     Product_Id = json.Product_Id,
-                    Product_Galery_Image_Img = filenames[0],
+                    Product_Galery_Image_Img = "ProductGaleryImageImages/" + filenames[0],
                     Product_Galery_Image_Order = json.Product_Galery_Image_Order
                 };
 
@@ -483,7 +541,7 @@ namespace api.busgarage.com.mx.Controllers
 
         [HttpPost]
         [Route("AdminContent/UpdateProductGaleryImage")]
-        public async Task<HttpResponseMessage> UpdateProductGaleryImage([FromBody] cat_Product_Galery_Images json)
+        public async Task<HttpResponseMessage> UpdateProductGaleryImage()
         {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             CMS_BusgarageEntities entity = new CMS_BusgarageEntities();
@@ -492,20 +550,33 @@ namespace api.busgarage.com.mx.Controllers
 
             try
             {
+                string jsonString = HttpContext.Current.Request.Form["cat_Product_Galery_Images"];
+                cat_Product_Galery_Images json = JsonConvert.DeserializeObject<cat_Product_Galery_Images>(jsonString);
+
                 var productGaleryImage = entity.cat_Product_Galery_Images.SingleOrDefault(x => x.Product_Galery_Image_Id == json.Product_Galery_Image_Id);
 
                 if (HttpContext.Current.Request.Files.Count > 0)
                 {
                     FileUtils.ReplaceFile(productGaleryImage.Product_Galery_Image_Img, HttpContext.Current.Request, "ProductGaleryImageImages", ref statusCode, ref dict, ref filenames);
-                    productGaleryImage.Product_Galery_Image_Img = filenames[0];
+                    productGaleryImage.Product_Galery_Image_Img = "ProductGaleryImageImages/" + filenames[0];
                 }
 
                 productGaleryImage.Product_Galery_Image_Order = json.Product_Galery_Image_Order;
                 entity.SaveChanges();
+
+                statusCode = HttpStatusCode.OK;
+                if (dict.Keys.Count == 0)
+                {
+                    dict.Add("message", "Product updated successfully");
+                }
             }
             catch (Exception ex)
             {
-                dict.Add("message", ex.Message);
+                if (dict.Keys.Count > 0)
+                {
+                    dict = new Dictionary<string, object>();
+                    dict.Add("message", "Product updated successfully");
+                }
             }
 
             await Task.CompletedTask;
@@ -514,7 +585,7 @@ namespace api.busgarage.com.mx.Controllers
 
         [HttpPost]
         [Route("AdminContent/DeleteProductGaleryImage")]
-        public async Task<HttpResponseMessage> DeleteProductGaleryImage([FromBody] int Product_Galery_Image_Id)
+        public async Task<HttpResponseMessage> DeleteProductGaleryImage([FromBody] cat_Product_Galery_Images json)
         {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             CMS_BusgarageEntities entity = new CMS_BusgarageEntities();
@@ -522,7 +593,7 @@ namespace api.busgarage.com.mx.Controllers
 
             try
             {
-                var productGaleryImage = entity.cat_Product_Galery_Images.SingleOrDefault(x => x.Product_Galery_Image_Id == Product_Galery_Image_Id);
+                var productGaleryImage = entity.cat_Product_Galery_Images.SingleOrDefault(x => x.Product_Galery_Image_Id == json.Product_Galery_Image_Id);
 
                 FileUtils.DeleteFile(productGaleryImage.Product_Galery_Image_Img);
 
@@ -543,13 +614,13 @@ namespace api.busgarage.com.mx.Controllers
         }
 
         [HttpGet]
-        [Route("AdminContent/GetProductGaleryImages/{Product_Galery_Image_Id}")]
-        public async Task<List<cat_Product_Galery_Images>> GetProductGaleryImages(int Product_Galery_Image_Id)
+        [Route("AdminContent/GetProductGaleryImages/{Product_Id}")]
+        public async Task<List<cat_Product_Galery_Images>> GetProductGaleryImages(int Product_Id)
         {
             CMS_BusgarageEntities entity = new CMS_BusgarageEntities();
 
             await Task.CompletedTask;
-            return entity.cat_Product_Galery_Images.Where(x => x.Product_Galery_Image_Id == Product_Galery_Image_Id).ToList();
+            return entity.cat_Product_Galery_Images.Where(x => x.Product_Id == Product_Id).OrderBy(x => x.Product_Galery_Image_Order).ToList();
         }
         #endregion
     }

@@ -24,6 +24,10 @@ namespace api.busgarage.com.mx.Entity
         public string Product_Description { get; set; }
         public string Product_Configurations { get; set; }
         public Nullable<System.DateTime> Product_Creation_Date { get; set; }
+        public bool Product_Released { get; set; }
         public int Product_Stock { get; set; }
+        public decimal Product_Ranking { get; set; }
+        public Nullable<decimal> Product_Price_Total { get; set; }
+        public Nullable<bool> Product_Is_New { get; set; }
     }
 }

@@ -30,6 +30,7 @@ namespace api.busgarage.com.mx.Entity
         public string Product_Description { get; set; }
         public string Product_Configurations { get; set; }
         public Nullable<System.DateTime> Product_Creation_Date { get; set; }
+        public bool Product_Released { get; set; }
         public int Product_Stock { get; set; }
     
         public virtual cat_Categories cat_Categories { get; set; }

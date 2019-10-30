@@ -261,3 +261,5 @@ __pycache__/
 *.pyc
 /api.busgarage.com.mx/OfferImage
 /api.busgarage.com.mx/ProductImages
+/api.busgarage.com.mx/ProductGaleryImageImages
+/api.busgarage.com.mx/SliderImages
