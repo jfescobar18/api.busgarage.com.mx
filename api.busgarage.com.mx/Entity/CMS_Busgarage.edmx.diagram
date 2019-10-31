@@ -10,7 +10,6 @@
         <EntityTypeShape EntityType="CMS_BusgarageModel.cat_Sepomex" Width="1.5" PointX="6.75" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="CMS_BusgarageModel.cat_Categories" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
         <AssociationConnector Association="CMS_BusgarageModel.FK__cat_Order__Kart___20C1E124" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="CMS_BusgarageModel.cat_Product_Galery_Images" Width="1.5" PointX="5.25" PointY="13.875" />
         <EntityTypeShape EntityType="CMS_BusgarageModel.cat_Reviews" Width="1.5" PointX="5.25" PointY="11.25" />
         <EntityTypeShape EntityType="CMS_BusgarageModel.cat_About_Us_Sections" Width="1.5" PointX="0.75" PointY="5.75" />
         <EntityTypeShape EntityType="CMS_BusgarageModel.cat_Offers_Image" Width="1.5" PointX="2.75" PointY="5.75" />
@@ -18,9 +17,10 @@
         <EntityTypeShape EntityType="CMS_BusgarageModel.cat_Admin_Login" Width="1.5" PointX="3.375" PointY="8.75" />
         <EntityTypeShape EntityType="CMS_BusgarageModel.cat_Products" Width="1.5" PointX="3.375" PointY="1" />
         <AssociationConnector Association="CMS_BusgarageModel.FK__cat_Produ__Categ__5812160E" />
-        <AssociationConnector Association="CMS_BusgarageModel.FK__cat_Produ__Produ__5AEE82B9" />
         <AssociationConnector Association="CMS_BusgarageModel.FK__cat_Revie__Produ__5CD6CB2B" />
         <EntityTypeShape EntityType="CMS_BusgarageModel.vw_Products" Width="1.5" PointX="9.375" PointY="5.75" />
+        <EntityTypeShape EntityType="CMS_BusgarageModel.cat_Product_Galery_Images" Width="1.5" PointX="5.625" PointY="13.875" />
+        <AssociationConnector Association="CMS_BusgarageModel.FK__cat_Produ__Produ__619B8048" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

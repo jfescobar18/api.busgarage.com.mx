@@ -248,6 +248,37 @@ namespace api.busgarage.com.mx.Controllers
         }
 
         [HttpGet]
+        [Route("AdminContent/GetProduct/{Product_Id}")]
+        public async Task<vw_Products> GetProduct(int Product_Id)
+        {
+            CMS_BusgarageEntities entity = new CMS_BusgarageEntities();
+
+            await Task.CompletedTask;
+            return entity.vw_Products.SingleOrDefault(x => x.Product_Id == Product_Id);
+        }
+
+        [HttpGet]
+        [Route("AdminContent/GetProducts/{Product_Ids}")]
+        public async Task<List<vw_Products>> GetProducts(string Product_Ids)
+        {
+            CMS_BusgarageEntities entity = new CMS_BusgarageEntities();
+            List<vw_Products> Products = new List<vw_Products>();
+
+            List<int> Ids = Product_Ids.Split(',').Select(Int32.Parse).ToList();
+            foreach (int id in Ids)
+            {
+                var product = entity.vw_Products.SingleOrDefault(x => x.Product_Id == id);
+                if(product != null)
+                {
+                    Products.Add(product);
+                }
+            }
+
+            await Task.CompletedTask;
+            return Products;
+        }
+
+        [HttpGet]
         [Route("AdminContent/GetAllProducts")]
         public async Task<List<vw_Products>> GetAllProducts()
         {
@@ -575,7 +606,7 @@ namespace api.busgarage.com.mx.Controllers
                 if (dict.Keys.Count > 0)
                 {
                     dict = new Dictionary<string, object>();
-                    dict.Add("message", "Product updated successfully");
+                    dict.Add("message", ex.Message);
                 }
             }
 

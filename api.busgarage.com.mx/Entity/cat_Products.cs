@@ -17,8 +17,8 @@ namespace api.busgarage.com.mx.Entity
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public cat_Products()
         {
-            this.cat_Product_Galery_Images = new HashSet<cat_Product_Galery_Images>();
             this.cat_Reviews = new HashSet<cat_Reviews>();
+            this.cat_Product_Galery_Images = new HashSet<cat_Product_Galery_Images>();
         }
     
         public int Product_Id { get; set; }
@@ -35,8 +35,8 @@ namespace api.busgarage.com.mx.Entity
     
         public virtual cat_Categories cat_Categories { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<cat_Product_Galery_Images> cat_Product_Galery_Images { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<cat_Reviews> cat_Reviews { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<cat_Product_Galery_Images> cat_Product_Galery_Images { get; set; }
     }
 }

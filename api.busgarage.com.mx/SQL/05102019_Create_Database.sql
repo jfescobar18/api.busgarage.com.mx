@@ -113,7 +113,7 @@ CREATE TABLE [dbo].[cat_Orders](
 GO
 
 CREATE TABLE [dbo].[cat_Product_Galery_Images](
-	[Product_Galery_Image_Id] [int] IDENTITY(1,1) NOT NULL,
+	[Product_Galery_Image_Id] [int] PRIMARY KEY IDENTITY(1,1) NOT NULL,
 	[Product_Id] [int] NOT NULL FOREIGN KEY REFERENCES [dbo].[cat_Products] ([Product_Id]),
 	[Product_Galery_Image_Img] [nvarchar](max) NOT NULL,
 	[Product_Galery_Image_Order] [int] NOT NULL
