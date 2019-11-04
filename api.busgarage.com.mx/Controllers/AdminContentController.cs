@@ -268,5 +268,31 @@ namespace api.busgarage.com.mx.Controllers
             return entity.cat_Offers_Image.ToList();
         }
         #endregion
+
+        #region Sepomex
+        [HttpGet]
+        [Route("AdminContent/GetSuburbs/{zip}")]
+        public async Task<List<vw_Sepomex_Info>> GetSuburbs(string zip)
+        {
+            CMS_BusgarageEntities entity = new CMS_BusgarageEntities();
+            await Task.CompletedTask;
+
+            var list = entity.vw_Sepomex_Info.Where(x => x.d_codigo == zip).Select(x => new {
+                x.d_asenta,
+                x.D_mnpio,
+                x.d_estado,
+                x.d_ciudad }).ToList();
+
+            List<vw_Sepomex_Info> suburbList = list.Select(x => new vw_Sepomex_Info()
+            {
+                d_asenta = x.d_asenta,
+                D_mnpio = x.D_mnpio,
+                d_estado = x.d_estado,
+                d_ciudad = x.d_ciudad
+            }).ToList();
+
+            return suburbList;
+        }
+        #endregion
     }
 }

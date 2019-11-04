@@ -18,7 +18,7 @@ namespace api.busgarage.com.mx.Entity
         public int Kart_Id { get; set; }
         public string Order_Client_Name { get; set; }
         public string Order_Client_Email { get; set; }
-        public int Order_Client_Phone { get; set; }
+        public string Order_Client_Phone { get; set; }
         public string Order_Client_Address1 { get; set; }
         public string Order_Client_Address2 { get; set; }
         public string Order_Client_Province { get; set; }

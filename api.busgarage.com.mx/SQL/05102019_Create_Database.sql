@@ -100,7 +100,7 @@ CREATE TABLE [dbo].[cat_Orders](
 	[Kart_Id][int] FOREIGN KEY REFERENCES [dbo].[cat_Karts]([Kart_Id]) NOT NULL,
 	[Order_Client_Name] [nvarchar](1024) NOT NULL,
 	[Order_Client_Email] [nvarchar](512) NOT NULL,
-	[Order_Client_Phone] [int] NOT NULL,
+	[Order_Client_Phone] [nvarchar](512) NOT NULL,
 	[Order_Client_Address1][nvarchar](1024) NOT NULL,
 	[Order_Client_Address2][nvarchar](1024) NOT NULL,
 	[Order_Client_Province][nvarchar](255) NOT NULL,
@@ -127,7 +127,7 @@ CREATE TABLE [dbo].[cat_Reviews](
 )
 GO
 
-ALTER VIEW [dbo].[vw_Products]
+CREATE VIEW [dbo].[vw_Products]
 AS
 	SELECT
 		[Product_Id],
@@ -153,4 +153,14 @@ AS
 	FROM [dbo].[cat_Products]
 	INNER JOIN [lookup].[cat_Categories]
 	ON [dbo].[cat_Products].[Category_Id] = [lookup].[cat_Categories].[Category_Id]
+GO
+
+CREATE VIEW [dbo].[vw_Sepomex_Info]
+AS
+	SELECT [d_codigo]
+      ,[d_asenta]
+      ,[D_mnpio]
+      ,[d_estado]
+      ,[d_ciudad]
+	FROM [dbo].[cat_Sepomex]
 GO

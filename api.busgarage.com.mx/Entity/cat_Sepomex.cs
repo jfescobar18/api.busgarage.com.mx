@@ -14,7 +14,7 @@ namespace api.busgarage.com.mx.Entity
     
     public partial class cat_Sepomex
     {
-        public int d_codigo { get; set; }
+        public string d_codigo { get; set; }
         public string d_asenta { get; set; }
         public string d_tipo_asenta { get; set; }
         public string D_mnpio { get; set; }

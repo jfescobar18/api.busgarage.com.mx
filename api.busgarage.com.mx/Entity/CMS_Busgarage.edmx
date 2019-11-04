@@ -44,7 +44,7 @@
           <Property Name="Kart_Id" Type="int" Nullable="false" />
           <Property Name="Order_Client_Name" Type="nvarchar" MaxLength="1024" Nullable="false" />
           <Property Name="Order_Client_Email" Type="nvarchar" MaxLength="512" Nullable="false" />
-          <Property Name="Order_Client_Phone" Type="int" Nullable="false" />
+          <Property Name="Order_Client_Phone" Type="nvarchar" MaxLength="512" Nullable="false" />
           <Property Name="Order_Client_Address1" Type="nvarchar" MaxLength="1024" Nullable="false" />
           <Property Name="Order_Client_Address2" Type="nvarchar" MaxLength="1024" Nullable="false" />
           <Property Name="Order_Client_Province" Type="nvarchar" MaxLength="255" Nullable="false" />
@@ -91,11 +91,13 @@ warning 6002: The table/view 'CMS_Busgarage.dbo.cat_Reviews' does not have a pri
           <Property Name="Product_Id" Type="int" Nullable="false" />
           <Property Name="Review_Score" Type="int" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'CMS_Busgarage.dbo.cat_Sepomex' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="cat_Sepomex">
           <Key>
             <PropertyRef Name="d_codigo" />
           </Key>
-          <Property Name="d_codigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="d_codigo" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="d_asenta" Type="nvarchar" MaxLength="512" />
           <Property Name="d_tipo_asenta" Type="nvarchar" MaxLength="512" />
           <Property Name="D_mnpio" Type="nvarchar" MaxLength="512" />
@@ -155,7 +157,19 @@ warning 6002: The table/view 'CMS_Busgarage.dbo.vw_Products' does not have a pri
           <Property Name="Product_Price_Total" Type="decimal" Precision="26" Scale="8" />
           <Property Name="Product_Is_New" Type="bit" />
         </EntityType>
-        <Association Name="FK__cat_Order__Kart___4E88ABD4">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'CMS_Busgarage.dbo.vw_Sepomex_Info' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_Sepomex_Info">
+          <Key>
+            <PropertyRef Name="d_codigo" />
+          </Key>
+          <Property Name="d_codigo" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="d_asenta" Type="nvarchar" MaxLength="512" />
+          <Property Name="D_mnpio" Type="nvarchar" MaxLength="512" />
+          <Property Name="d_estado" Type="nvarchar" MaxLength="512" />
+          <Property Name="d_ciudad" Type="nvarchar" MaxLength="512" />
+        </EntityType>
+        <Association Name="FK__cat_Order__Kart___693CA210">
           <End Role="cat_Karts" Type="Self.cat_Karts" Multiplicity="1" />
           <End Role="cat_Orders" Type="Self.cat_Orders" Multiplicity="*" />
           <ReferentialConstraint>
@@ -211,7 +225,6 @@ warning 6002: The table/view 'CMS_Busgarage.dbo.vw_Products' does not have a pri
           <EntitySet Name="cat_Orders" EntityType="Self.cat_Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cat_Product_Galery_Images" EntityType="Self.cat_Product_Galery_Images" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cat_Products" EntityType="Self.cat_Products" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="cat_Sepomex" EntityType="Self.cat_Sepomex" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cat_Slider_Images" EntityType="Self.cat_Slider_Images" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cat_Categories" EntityType="Self.cat_Categories" Schema="lookup" store:Type="Tables" />
           <EntitySet Name="cat_Reviews" EntityType="Self.cat_Reviews" store:Type="Tables" store:Schema="dbo">
@@ -220,6 +233,25 @@ warning 6002: The table/view 'CMS_Busgarage.dbo.vw_Products' does not have a pri
     [cat_Reviews].[Product_Id] AS [Product_Id], 
     [cat_Reviews].[Review_Score] AS [Review_Score]
     FROM [dbo].[cat_Reviews] AS [cat_Reviews]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="cat_Sepomex" EntityType="Self.cat_Sepomex" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [cat_Sepomex].[d_codigo] AS [d_codigo], 
+    [cat_Sepomex].[d_asenta] AS [d_asenta], 
+    [cat_Sepomex].[d_tipo_asenta] AS [d_tipo_asenta], 
+    [cat_Sepomex].[D_mnpio] AS [D_mnpio], 
+    [cat_Sepomex].[d_estado] AS [d_estado], 
+    [cat_Sepomex].[d_ciudad] AS [d_ciudad], 
+    [cat_Sepomex].[d_CP] AS [d_CP], 
+    [cat_Sepomex].[c_estado] AS [c_estado], 
+    [cat_Sepomex].[c_oficina] AS [c_oficina], 
+    [cat_Sepomex].[c_CP] AS [c_CP], 
+    [cat_Sepomex].[c_tipo_asenta] AS [c_tipo_asenta], 
+    [cat_Sepomex].[c_mnpio] AS [c_mnpio], 
+    [cat_Sepomex].[id_asenta_cpcons] AS [id_asenta_cpcons], 
+    [cat_Sepomex].[d_zona] AS [d_zona], 
+    [cat_Sepomex].[c_cve_ciudad] AS [c_cve_ciudad]
+    FROM [dbo].[cat_Sepomex] AS [cat_Sepomex]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vw_Products" EntityType="Self.vw_Products" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -240,7 +272,16 @@ warning 6002: The table/view 'CMS_Busgarage.dbo.vw_Products' does not have a pri
     [vw_Products].[Product_Is_New] AS [Product_Is_New]
     FROM [dbo].[vw_Products] AS [vw_Products]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__cat_Order__Kart___4E88ABD4" Association="Self.FK__cat_Order__Kart___4E88ABD4">
+          <EntitySet Name="vw_Sepomex_Info" EntityType="Self.vw_Sepomex_Info" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_Sepomex_Info].[d_codigo] AS [d_codigo], 
+    [vw_Sepomex_Info].[d_asenta] AS [d_asenta], 
+    [vw_Sepomex_Info].[D_mnpio] AS [D_mnpio], 
+    [vw_Sepomex_Info].[d_estado] AS [d_estado], 
+    [vw_Sepomex_Info].[d_ciudad] AS [d_ciudad]
+    FROM [dbo].[vw_Sepomex_Info] AS [vw_Sepomex_Info]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__cat_Order__Kart___693CA210" Association="Self.FK__cat_Order__Kart___693CA210">
             <End Role="cat_Karts" EntitySet="cat_Karts" />
             <End Role="cat_Orders" EntitySet="cat_Orders" />
           </AssociationSet>
@@ -268,46 +309,7 @@ warning 6002: The table/view 'CMS_Busgarage.dbo.vw_Products' does not have a pri
           <Property Name="Kart_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Kart_Json_Config" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Kart_Creation_Date" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="cat_Orders" Relationship="Self.FK__cat_Order__Kart___20C1E124" FromRole="cat_Karts" ToRole="cat_Orders" />
-        </EntityType>
-        <EntityType Name="cat_Orders">
-          <Key>
-            <PropertyRef Name="Order_Id" />
-          </Key>
-          <Property Name="Order_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Kart_Id" Type="Int32" Nullable="false" />
-          <Property Name="Order_Client_Name" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Order_Client_Email" Type="String" MaxLength="512" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Order_Client_Phone" Type="Int32" Nullable="false" />
-          <Property Name="Order_Client_Address1" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Order_Client_Address2" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Order_Client_Province" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Order_Client_City" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Order_Client_Zip" Type="String" MaxLength="11" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Order_Client_Comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Order_Creation_Date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Order_Delivered_Date" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="cat_Karts" Relationship="Self.FK__cat_Order__Kart___20C1E124" FromRole="cat_Orders" ToRole="cat_Karts" />
-        </EntityType>
-        <EntityType Name="cat_Sepomex">
-          <Key>
-            <PropertyRef Name="d_codigo" />
-          </Key>
-          <Property Name="d_codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="d_asenta" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
-          <Property Name="d_tipo_asenta" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
-          <Property Name="D_mnpio" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
-          <Property Name="d_estado" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
-          <Property Name="d_ciudad" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
-          <Property Name="d_CP" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
-          <Property Name="c_estado" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
-          <Property Name="c_oficina" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
-          <Property Name="c_CP" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
-          <Property Name="c_tipo_asenta" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
-          <Property Name="c_mnpio" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
-          <Property Name="id_asenta_cpcons" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
-          <Property Name="d_zona" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
-          <Property Name="c_cve_ciudad" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="cat_Orders" Relationship="CMS_BusgarageModel.FK__cat_Order__Kart___693CA210" FromRole="cat_Karts" ToRole="cat_Orders" />
         </EntityType>
         <EntityType Name="cat_Categories">
           <Key>
@@ -317,27 +319,9 @@ warning 6002: The table/view 'CMS_Busgarage.dbo.vw_Products' does not have a pri
           <Property Name="Category_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="cat_Products" Relationship="CMS_BusgarageModel.FK__cat_Produ__Categ__5812160E" FromRole="cat_Categories" ToRole="cat_Products" />
         </EntityType>
-        <Association Name="FK__cat_Order__Kart___20C1E124">
-          <End Role="cat_Karts" Type="Self.cat_Karts" Multiplicity="1" />
-          <End Role="cat_Orders" Type="Self.cat_Orders" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="cat_Karts">
-              <PropertyRef Name="Kart_Id" />
-            </Principal>
-            <Dependent Role="cat_Orders">
-              <PropertyRef Name="Kart_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="CMS_BusgarageEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="cat_Karts" EntityType="Self.cat_Karts" />
-          <EntitySet Name="cat_Orders" EntityType="Self.cat_Orders" />
-          <EntitySet Name="cat_Sepomex" EntityType="Self.cat_Sepomex" />
           <EntitySet Name="cat_Categories" EntityType="Self.cat_Categories" />
-          <AssociationSet Name="FK__cat_Order__Kart___20C1E124" Association="Self.FK__cat_Order__Kart___20C1E124">
-            <End Role="cat_Karts" EntitySet="cat_Karts" />
-            <End Role="cat_Orders" EntitySet="cat_Orders" />
-          </AssociationSet>
           <EntitySet Name="cat_Reviews" EntityType="CMS_BusgarageModel.cat_Reviews" />
           <EntitySet Name="cat_About_Us_Sections" EntityType="CMS_BusgarageModel.cat_About_Us_Sections" />
           <EntitySet Name="cat_Offers_Image" EntityType="CMS_BusgarageModel.cat_Offers_Image" />
@@ -357,6 +341,13 @@ warning 6002: The table/view 'CMS_Busgarage.dbo.vw_Products' does not have a pri
           <AssociationSet Name="FK__cat_Produ__Produ__619B8048" Association="CMS_BusgarageModel.FK__cat_Produ__Produ__619B8048">
             <End Role="cat_Products" EntitySet="cat_Products" />
             <End Role="cat_Product_Galery_Images" EntitySet="cat_Product_Galery_Images" />
+          </AssociationSet>
+          <EntitySet Name="vw_Sepomex_Info" EntityType="CMS_BusgarageModel.vw_Sepomex_Info" />
+          <EntitySet Name="cat_Orders" EntityType="CMS_BusgarageModel.cat_Orders" />
+          <EntitySet Name="cat_Sepomex" EntityType="CMS_BusgarageModel.cat_Sepomex" />
+          <AssociationSet Name="FK__cat_Order__Kart___693CA210" Association="CMS_BusgarageModel.FK__cat_Order__Kart___693CA210">
+            <End Role="cat_Karts" EntitySet="cat_Karts" />
+            <End Role="cat_Orders" EntitySet="cat_Orders" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="cat_Reviews">
@@ -491,6 +482,67 @@ warning 6002: The table/view 'CMS_Busgarage.dbo.vw_Products' does not have a pri
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="vw_Sepomex_Info">
+          <Key>
+            <PropertyRef Name="d_codigo" />
+          </Key>
+          <Property Name="d_codigo" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="d_asenta" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="D_mnpio" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="d_estado" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="d_ciudad" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="cat_Orders">
+          <Key>
+            <PropertyRef Name="Order_Id" />
+          </Key>
+          <Property Name="Order_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Kart_Id" Type="Int32" Nullable="false" />
+          <Property Name="Order_Client_Name" Type="String" Nullable="false" MaxLength="1024" FixedLength="false" Unicode="true" />
+          <Property Name="Order_Client_Email" Type="String" Nullable="false" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="Order_Client_Phone" Type="String" Nullable="false" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="Order_Client_Address1" Type="String" Nullable="false" MaxLength="1024" FixedLength="false" Unicode="true" />
+          <Property Name="Order_Client_Address2" Type="String" Nullable="false" MaxLength="1024" FixedLength="false" Unicode="true" />
+          <Property Name="Order_Client_Province" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Order_Client_City" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Order_Client_Zip" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="true" />
+          <Property Name="Order_Client_Comments" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Order_Creation_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Order_Delivered_Date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="cat_Karts" Relationship="CMS_BusgarageModel.FK__cat_Order__Kart___693CA210" FromRole="cat_Orders" ToRole="cat_Karts" />
+        </EntityType>
+        <EntityType Name="cat_Sepomex">
+          <Key>
+            <PropertyRef Name="d_codigo" />
+          </Key>
+          <Property Name="d_codigo" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="d_asenta" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="d_tipo_asenta" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="D_mnpio" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="d_estado" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="d_ciudad" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="d_CP" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="c_estado" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="c_oficina" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="c_CP" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="c_tipo_asenta" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="c_mnpio" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="id_asenta_cpcons" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="d_zona" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="c_cve_ciudad" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK__cat_Order__Kart___693CA210">
+          <End Type="CMS_BusgarageModel.cat_Karts" Role="cat_Karts" Multiplicity="1" />
+          <End Type="CMS_BusgarageModel.cat_Orders" Role="cat_Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cat_Karts">
+              <PropertyRef Name="Kart_Id" />
+            </Principal>
+            <Dependent Role="cat_Orders">
+              <PropertyRef Name="Kart_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -503,46 +555,6 @@ warning 6002: The table/view 'CMS_Busgarage.dbo.vw_Products' does not have a pri
                 <ScalarProperty Name="Kart_Id" ColumnName="Kart_Id" />
                 <ScalarProperty Name="Kart_Json_Config" ColumnName="Kart_Json_Config" />
                 <ScalarProperty Name="Kart_Creation_Date" ColumnName="Kart_Creation_Date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="cat_Orders">
-            <EntityTypeMapping TypeName="CMS_BusgarageModel.cat_Orders">
-              <MappingFragment StoreEntitySet="cat_Orders">
-                <ScalarProperty Name="Order_Id" ColumnName="Order_Id" />
-                <ScalarProperty Name="Kart_Id" ColumnName="Kart_Id" />
-                <ScalarProperty Name="Order_Client_Name" ColumnName="Order_Client_Name" />
-                <ScalarProperty Name="Order_Client_Email" ColumnName="Order_Client_Email" />
-                <ScalarProperty Name="Order_Client_Phone" ColumnName="Order_Client_Phone" />
-                <ScalarProperty Name="Order_Client_Address1" ColumnName="Order_Client_Address1" />
-                <ScalarProperty Name="Order_Client_Address2" ColumnName="Order_Client_Address2" />
-                <ScalarProperty Name="Order_Client_Province" ColumnName="Order_Client_Province" />
-                <ScalarProperty Name="Order_Client_City" ColumnName="Order_Client_City" />
-                <ScalarProperty Name="Order_Client_Zip" ColumnName="Order_Client_Zip" />
-                <ScalarProperty Name="Order_Client_Comments" ColumnName="Order_Client_Comments" />
-                <ScalarProperty Name="Order_Creation_Date" ColumnName="Order_Creation_Date" />
-                <ScalarProperty Name="Order_Delivered_Date" ColumnName="Order_Delivered_Date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="cat_Sepomex">
-            <EntityTypeMapping TypeName="CMS_BusgarageModel.cat_Sepomex">
-              <MappingFragment StoreEntitySet="cat_Sepomex">
-                <ScalarProperty Name="d_codigo" ColumnName="d_codigo" />
-                <ScalarProperty Name="d_asenta" ColumnName="d_asenta" />
-                <ScalarProperty Name="d_tipo_asenta" ColumnName="d_tipo_asenta" />
-                <ScalarProperty Name="D_mnpio" ColumnName="D_mnpio" />
-                <ScalarProperty Name="d_estado" ColumnName="d_estado" />
-                <ScalarProperty Name="d_ciudad" ColumnName="d_ciudad" />
-                <ScalarProperty Name="d_CP" ColumnName="d_CP" />
-                <ScalarProperty Name="c_estado" ColumnName="c_estado" />
-                <ScalarProperty Name="c_oficina" ColumnName="c_oficina" />
-                <ScalarProperty Name="c_CP" ColumnName="c_CP" />
-                <ScalarProperty Name="c_tipo_asenta" ColumnName="c_tipo_asenta" />
-                <ScalarProperty Name="c_mnpio" ColumnName="c_mnpio" />
-                <ScalarProperty Name="id_asenta_cpcons" ColumnName="id_asenta_cpcons" />
-                <ScalarProperty Name="d_zona" ColumnName="d_zona" />
-                <ScalarProperty Name="c_cve_ciudad" ColumnName="c_cve_ciudad" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -642,6 +654,57 @@ warning 6002: The table/view 'CMS_Busgarage.dbo.vw_Products' does not have a pri
                 <ScalarProperty Name="Product_Galery_Image_Img" ColumnName="Product_Galery_Image_Img" />
                 <ScalarProperty Name="Product_Id" ColumnName="Product_Id" />
                 <ScalarProperty Name="Product_Galery_Image_Id" ColumnName="Product_Galery_Image_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_Sepomex_Info">
+            <EntityTypeMapping TypeName="CMS_BusgarageModel.vw_Sepomex_Info">
+              <MappingFragment StoreEntitySet="vw_Sepomex_Info">
+                <ScalarProperty Name="d_ciudad" ColumnName="d_ciudad" />
+                <ScalarProperty Name="d_estado" ColumnName="d_estado" />
+                <ScalarProperty Name="D_mnpio" ColumnName="D_mnpio" />
+                <ScalarProperty Name="d_asenta" ColumnName="d_asenta" />
+                <ScalarProperty Name="d_codigo" ColumnName="d_codigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cat_Orders">
+            <EntityTypeMapping TypeName="CMS_BusgarageModel.cat_Orders">
+              <MappingFragment StoreEntitySet="cat_Orders">
+                <ScalarProperty Name="Order_Delivered_Date" ColumnName="Order_Delivered_Date" />
+                <ScalarProperty Name="Order_Creation_Date" ColumnName="Order_Creation_Date" />
+                <ScalarProperty Name="Order_Client_Comments" ColumnName="Order_Client_Comments" />
+                <ScalarProperty Name="Order_Client_Zip" ColumnName="Order_Client_Zip" />
+                <ScalarProperty Name="Order_Client_City" ColumnName="Order_Client_City" />
+                <ScalarProperty Name="Order_Client_Province" ColumnName="Order_Client_Province" />
+                <ScalarProperty Name="Order_Client_Address2" ColumnName="Order_Client_Address2" />
+                <ScalarProperty Name="Order_Client_Address1" ColumnName="Order_Client_Address1" />
+                <ScalarProperty Name="Order_Client_Phone" ColumnName="Order_Client_Phone" />
+                <ScalarProperty Name="Order_Client_Email" ColumnName="Order_Client_Email" />
+                <ScalarProperty Name="Order_Client_Name" ColumnName="Order_Client_Name" />
+                <ScalarProperty Name="Kart_Id" ColumnName="Kart_Id" />
+                <ScalarProperty Name="Order_Id" ColumnName="Order_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cat_Sepomex">
+            <EntityTypeMapping TypeName="CMS_BusgarageModel.cat_Sepomex">
+              <MappingFragment StoreEntitySet="cat_Sepomex">
+                <ScalarProperty Name="c_cve_ciudad" ColumnName="c_cve_ciudad" />
+                <ScalarProperty Name="d_zona" ColumnName="d_zona" />
+                <ScalarProperty Name="id_asenta_cpcons" ColumnName="id_asenta_cpcons" />
+                <ScalarProperty Name="c_mnpio" ColumnName="c_mnpio" />
+                <ScalarProperty Name="c_tipo_asenta" ColumnName="c_tipo_asenta" />
+                <ScalarProperty Name="c_CP" ColumnName="c_CP" />
+                <ScalarProperty Name="c_oficina" ColumnName="c_oficina" />
+                <ScalarProperty Name="c_estado" ColumnName="c_estado" />
+                <ScalarProperty Name="d_CP" ColumnName="d_CP" />
+                <ScalarProperty Name="d_ciudad" ColumnName="d_ciudad" />
+                <ScalarProperty Name="d_estado" ColumnName="d_estado" />
+                <ScalarProperty Name="D_mnpio" ColumnName="D_mnpio" />
+                <ScalarProperty Name="d_tipo_asenta" ColumnName="d_tipo_asenta" />
+                <ScalarProperty Name="d_asenta" ColumnName="d_asenta" />
+                <ScalarProperty Name="d_codigo" ColumnName="d_codigo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

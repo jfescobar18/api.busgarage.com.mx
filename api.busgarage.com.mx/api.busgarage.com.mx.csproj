@@ -51,6 +51,9 @@
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Openpay, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Openpay.1.0.25\lib\net45\Openpay.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -144,8 +147,9 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AdminContentController.cs" />
     <Compile Include="Controllers\AdminCredentialsController.cs" />
-    <Compile Include="Controllers\AdminProducController.cs" />
+    <Compile Include="Controllers\AdminProductController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Entity\cat_About_Us_Sections.cs">
       <DependentUpon>CMS_Busgarage.tt</DependentUpon>
     </Compile>
@@ -197,10 +201,24 @@
     <Compile Include="Entity\vw_Products.cs">
       <DependentUpon>CMS_Busgarage.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\vw_Sepomex_Info.cs">
+      <DependentUpon>CMS_Busgarage.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="MessageHandlers\APIKeyMessageHandlercs.cs" />
+    <Compile Include="Models\AddressFromSkydropx.cs" />
+    <Compile Include="Models\AddressToSkydropx.cs" />
+    <Compile Include="Models\CheckoutOrder.cs" />
+    <Compile Include="Models\ParcelSkydropx.cs" />
+    <Compile Include="Models\PaymentOrder.cs" />
+    <Compile Include="Models\RootObjectSkydropx.cs" />
+    <Compile Include="OpenpayResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OpenpayResources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\CredentialUtils.cs" />
     <Compile Include="Utils\FileUtils.cs" />
@@ -241,7 +259,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\" />
-    <Folder Include="Models\" />
     <Folder Include="Scripts\" />
   </ItemGroup>
   <ItemGroup>
@@ -257,6 +274,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="OpenpayResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>OpenpayResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
