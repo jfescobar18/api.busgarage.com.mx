@@ -37,7 +37,7 @@ namespace api.busgarage.com.mx.Entity
         public virtual DbSet<vw_Products> vw_Products { get; set; }
         public virtual DbSet<cat_Product_Galery_Images> cat_Product_Galery_Images { get; set; }
         public virtual DbSet<vw_Sepomex_Info> vw_Sepomex_Info { get; set; }
-        public virtual DbSet<cat_Orders> cat_Orders { get; set; }
         public virtual DbSet<cat_Sepomex> cat_Sepomex { get; set; }
+        public virtual DbSet<cat_Orders> cat_Orders { get; set; }
     }
 }

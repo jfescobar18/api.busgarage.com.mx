@@ -1,5 +1,6 @@
 ﻿using api.busgarage.com.mx.Entity;
 using api.busgarage.com.mx.Models;
+using api.busgarage.com.mx.Resources;
 using Newtonsoft.Json;
 using Openpay;
 using Openpay.Entities;
@@ -52,8 +53,15 @@ namespace api.busgarage.com.mx.Controllers
 
                 if (charge.ErrorMessage == null)
                 {
-                    AddOrder(json.JsonOrder);
+                    List<KartProducts> kartProducts = new List<KartProducts>();
+                    string orderNumber = String.Empty;
+                    string paymentReference = json.Method == "store" ? charge.PaymentMethod.Reference : String.Empty;
+
+                    AddOrder(json.JsonOrder, charge.Id, paymentReference, ref kartProducts, ref orderNumber);
                     statusCode = HttpStatusCode.OK;
+
+                    MailingUtils.SendOrderEmail(charge.Status == "completed", kartProducts, orderNumber, paymentReference, json.Email, "Orden Busgarage");
+
                     dict.Add("message", "Order created successfully");
                     dict.Add("OpenpayResponse", charge);
                 }
@@ -75,7 +83,7 @@ namespace api.busgarage.com.mx.Controllers
             return Request.CreateResponse(statusCode, dict);
         }
 
-        public async void AddOrder(string jsonString)
+        public void AddOrder(string jsonString, string chargeId, string paymentReference, ref List<KartProducts> kartProducts, ref string orderNumber)
         {
             CMS_BusgarageEntities entity = new CMS_BusgarageEntities();
 
@@ -91,6 +99,8 @@ namespace api.busgarage.com.mx.Controllers
                 entity.cat_Karts.Add(kart);
                 entity.SaveChanges();
 
+                kartProducts = JsonConvert.DeserializeObject<List<KartProducts>>(json.Kart_Json);
+
                 string exteriorNumber = json.Address_Number2.Length > 0 ? "Ext. " + json.Address_Number2 : "";
                 var order = new cat_Orders()
                 {
@@ -105,18 +115,20 @@ namespace api.busgarage.com.mx.Controllers
                     Order_Client_Zip = json.Order_Client_Zip,
                     Order_Client_Comments = json.Order_Client_Comments,
                     Order_Creation_Date = DateTime.Now,
-                    Order_Delivered_Date = null
+                    Order_Delivered_Date = null,
+                    Order_Openpay_ChargeId = chargeId,
+                    Order_Tracking_Id = String.Empty
                 };
 
                 entity.cat_Orders.Add(order);
                 entity.SaveChanges();
+
+                orderNumber = $"{DateTime.Now.ToString("ddMMyyyy")}{order.Order_Id}";
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
-
-            await Task.CompletedTask;
         }
 
         [Obsolete("AddOrderToSkydropx is deprecated, please don't use until have access to production")]

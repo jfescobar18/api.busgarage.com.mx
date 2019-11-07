@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace api.busgarage.com.mx {
+namespace api.busgarage.com.mx.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace api.busgarage.com.mx {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("api.busgarage.com.mx.OpenpayResources", typeof(OpenpayResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("api.busgarage.com.mx.Resources.OpenpayResources", typeof(OpenpayResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

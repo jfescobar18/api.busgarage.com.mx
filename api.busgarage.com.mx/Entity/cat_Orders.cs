@@ -27,6 +27,8 @@ namespace api.busgarage.com.mx.Entity
         public string Order_Client_Comments { get; set; }
         public System.DateTime Order_Creation_Date { get; set; }
         public Nullable<System.DateTime> Order_Delivered_Date { get; set; }
+        public string Order_Openpay_ChargeId { get; set; }
+        public string Order_Tracking_Id { get; set; }
     
         public virtual cat_Karts cat_Karts { get; set; }
     }

@@ -108,7 +108,9 @@ CREATE TABLE [dbo].[cat_Orders](
 	[Order_Client_Zip][nvarchar](11) NOT NULL,
 	[Order_Client_Comments][nvarchar](max) NOT NULL,
 	[Order_Creation_Date][datetime] DEFAULT(GETDATE()) NOT NULL,
-	[Order_Delivered_Date][datetime] NULL
+	[Order_Delivered_Date][datetime] NULL,
+	[Order_Openpay_ChargeId][nvarchar](255) NOT NULL,
+	[Order_Tracking_Id][nvarchar](255) NULL
 )
 GO
 

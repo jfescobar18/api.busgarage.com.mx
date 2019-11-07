@@ -150,6 +150,11 @@
     <Compile Include="Controllers\AdminProductController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
+    <Compile Include="Resources\EmailResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EmailResources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Entity\cat_About_Us_Sections.cs">
       <DependentUpon>CMS_Busgarage.tt</DependentUpon>
     </Compile>
@@ -211,10 +216,11 @@
     <Compile Include="Models\AddressFromSkydropx.cs" />
     <Compile Include="Models\AddressToSkydropx.cs" />
     <Compile Include="Models\CheckoutOrder.cs" />
+    <Compile Include="Models\KartProducts.cs" />
     <Compile Include="Models\ParcelSkydropx.cs" />
     <Compile Include="Models\PaymentOrder.cs" />
     <Compile Include="Models\RootObjectSkydropx.cs" />
-    <Compile Include="OpenpayResources.Designer.cs">
+    <Compile Include="Resources\OpenpayResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>OpenpayResources.resx</DependentUpon>
@@ -222,6 +228,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\CredentialUtils.cs" />
     <Compile Include="Utils\FileUtils.cs" />
+    <Compile Include="Utils\MailingUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -237,6 +244,14 @@
     </Content>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Mailing\img\email.png" />
+    <Content Include="Mailing\img\facebook.png" />
+    <Content Include="Mailing\img\instagram.png" />
+    <Content Include="Mailing\img\website.png" />
+    <Content Include="Mailing\img\logo.png" />
+    <Content Include="Mailing\img\youtube.png" />
+    <Content Include="Mailing\orderConfirmedEmail.html" />
+    <Content Include="Mailing\paymentOderEmail.html" />
     <Content Include="SQL\05102019_Create_Database.sql" />
     <None Include="SQL\05102019_Insert_cat_Sepomex_R1.sql" />
     <None Include="SQL\05102019_Insert_cat_Sepomex_R2.sql" />
@@ -276,7 +291,11 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="OpenpayResources.resx">
+    <EmbeddedResource Include="Resources\EmailResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>EmailResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\OpenpayResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>OpenpayResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
