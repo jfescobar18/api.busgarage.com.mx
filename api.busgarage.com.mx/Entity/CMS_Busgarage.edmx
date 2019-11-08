@@ -130,6 +130,44 @@ warning 6002: The table/view 'CMS_Busgarage.dbo.cat_Sepomex' does not have a pri
           <Property Name="Category_Name" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'CMS_Busgarage.dbo.vw_Orders' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_Orders">
+          <Key>
+            <PropertyRef Name="Order_Id" />
+            <PropertyRef Name="Kart_Id" />
+            <PropertyRef Name="Kart_Json_Config" />
+            <PropertyRef Name="Order_Client_Name" />
+            <PropertyRef Name="Order_Client_Email" />
+            <PropertyRef Name="Order_Client_Phone" />
+            <PropertyRef Name="Order_Client_Address1" />
+            <PropertyRef Name="Order_Client_Address2" />
+            <PropertyRef Name="Order_Client_Province" />
+            <PropertyRef Name="Order_Client_City" />
+            <PropertyRef Name="Order_Client_Zip" />
+            <PropertyRef Name="Order_Client_Comments" />
+            <PropertyRef Name="Order_Creation_Date" />
+            <PropertyRef Name="Order_Openpay_ChargeId" />
+            <PropertyRef Name="Order_Payment_Status" />
+          </Key>
+          <Property Name="Order_Id" Type="int" Nullable="false" />
+          <Property Name="Kart_Id" Type="int" Nullable="false" />
+          <Property Name="Kart_Json_Config" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Order_Client_Name" Type="nvarchar" MaxLength="1024" Nullable="false" />
+          <Property Name="Order_Client_Email" Type="nvarchar" MaxLength="512" Nullable="false" />
+          <Property Name="Order_Client_Phone" Type="nvarchar" MaxLength="512" Nullable="false" />
+          <Property Name="Order_Client_Address1" Type="nvarchar" MaxLength="1024" Nullable="false" />
+          <Property Name="Order_Client_Address2" Type="nvarchar" MaxLength="1024" Nullable="false" />
+          <Property Name="Order_Client_Province" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Order_Client_City" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Order_Client_Zip" Type="nvarchar" MaxLength="11" Nullable="false" />
+          <Property Name="Order_Client_Comments" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Order_Creation_Date" Type="datetime" Nullable="false" />
+          <Property Name="Order_Delivered_Date" Type="datetime" />
+          <Property Name="Order_Openpay_ChargeId" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Order_Payment_Status" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="Order_Tracking_Id" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'CMS_Busgarage.dbo.vw_Products' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_Products">
           <Key>
@@ -171,7 +209,7 @@ warning 6002: The table/view 'CMS_Busgarage.dbo.vw_Sepomex_Info' does not have a
           <Property Name="d_estado" Type="nvarchar" MaxLength="512" />
           <Property Name="d_ciudad" Type="nvarchar" MaxLength="512" />
         </EntityType>
-        <Association Name="FK__cat_Order__Kart___70DDC3D8">
+        <Association Name="FK__cat_Order__Kart___7A672E12">
           <End Role="cat_Karts" Type="Self.cat_Karts" Multiplicity="1" />
           <End Role="cat_Orders" Type="Self.cat_Orders" Multiplicity="*" />
           <ReferentialConstraint>
@@ -255,6 +293,27 @@ warning 6002: The table/view 'CMS_Busgarage.dbo.vw_Sepomex_Info' does not have a
     [cat_Sepomex].[c_cve_ciudad] AS [c_cve_ciudad]
     FROM [dbo].[cat_Sepomex] AS [cat_Sepomex]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vw_Orders" EntityType="Self.vw_Orders" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_Orders].[Order_Id] AS [Order_Id], 
+    [vw_Orders].[Kart_Id] AS [Kart_Id], 
+    [vw_Orders].[Kart_Json_Config] AS [Kart_Json_Config], 
+    [vw_Orders].[Order_Client_Name] AS [Order_Client_Name], 
+    [vw_Orders].[Order_Client_Email] AS [Order_Client_Email], 
+    [vw_Orders].[Order_Client_Phone] AS [Order_Client_Phone], 
+    [vw_Orders].[Order_Client_Address1] AS [Order_Client_Address1], 
+    [vw_Orders].[Order_Client_Address2] AS [Order_Client_Address2], 
+    [vw_Orders].[Order_Client_Province] AS [Order_Client_Province], 
+    [vw_Orders].[Order_Client_City] AS [Order_Client_City], 
+    [vw_Orders].[Order_Client_Zip] AS [Order_Client_Zip], 
+    [vw_Orders].[Order_Client_Comments] AS [Order_Client_Comments], 
+    [vw_Orders].[Order_Creation_Date] AS [Order_Creation_Date], 
+    [vw_Orders].[Order_Delivered_Date] AS [Order_Delivered_Date], 
+    [vw_Orders].[Order_Openpay_ChargeId] AS [Order_Openpay_ChargeId], 
+    [vw_Orders].[Order_Payment_Status] AS [Order_Payment_Status], 
+    [vw_Orders].[Order_Tracking_Id] AS [Order_Tracking_Id]
+    FROM [dbo].[vw_Orders] AS [vw_Orders]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vw_Products" EntityType="Self.vw_Products" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vw_Products].[Product_Id] AS [Product_Id], 
@@ -283,7 +342,7 @@ warning 6002: The table/view 'CMS_Busgarage.dbo.vw_Sepomex_Info' does not have a
     [vw_Sepomex_Info].[d_ciudad] AS [d_ciudad]
     FROM [dbo].[vw_Sepomex_Info] AS [vw_Sepomex_Info]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__cat_Order__Kart___70DDC3D8" Association="Self.FK__cat_Order__Kart___70DDC3D8">
+          <AssociationSet Name="FK__cat_Order__Kart___7A672E12" Association="Self.FK__cat_Order__Kart___7A672E12">
             <End Role="cat_Karts" EntitySet="cat_Karts" />
             <End Role="cat_Orders" EntitySet="cat_Orders" />
           </AssociationSet>
@@ -311,7 +370,7 @@ warning 6002: The table/view 'CMS_Busgarage.dbo.vw_Sepomex_Info' does not have a
           <Property Name="Kart_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Kart_Json_Config" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Kart_Creation_Date" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="cat_Orders" Relationship="CMS_BusgarageModel.FK__cat_Order__Kart___70DDC3D8" FromRole="cat_Karts" ToRole="cat_Orders" />
+          <NavigationProperty Name="cat_Orders" Relationship="CMS_BusgarageModel.FK__cat_Order__Kart___7A672E12" FromRole="cat_Karts" ToRole="cat_Orders" />
         </EntityType>
         <EntityType Name="cat_Categories">
           <Key>
@@ -347,10 +406,11 @@ warning 6002: The table/view 'CMS_Busgarage.dbo.vw_Sepomex_Info' does not have a
           <EntitySet Name="vw_Sepomex_Info" EntityType="CMS_BusgarageModel.vw_Sepomex_Info" />
           <EntitySet Name="cat_Sepomex" EntityType="CMS_BusgarageModel.cat_Sepomex" />
           <EntitySet Name="cat_Orders" EntityType="CMS_BusgarageModel.cat_Orders" />
-          <AssociationSet Name="FK__cat_Order__Kart___70DDC3D8" Association="CMS_BusgarageModel.FK__cat_Order__Kart___70DDC3D8">
+          <AssociationSet Name="FK__cat_Order__Kart___7A672E12" Association="CMS_BusgarageModel.FK__cat_Order__Kart___7A672E12">
             <End Role="cat_Karts" EntitySet="cat_Karts" />
             <End Role="cat_Orders" EntitySet="cat_Orders" />
           </AssociationSet>
+          <EntitySet Name="vw_Orders" EntityType="CMS_BusgarageModel.vw_Orders" />
           </EntityContainer>
         <EntityType Name="cat_Reviews">
           <Key>
@@ -533,9 +593,9 @@ warning 6002: The table/view 'CMS_Busgarage.dbo.vw_Sepomex_Info' does not have a
           <Property Name="Order_Delivered_Date" Type="DateTime" Precision="3" />
           <Property Name="Order_Openpay_ChargeId" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Order_Tracking_Id" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="cat_Karts" Relationship="CMS_BusgarageModel.FK__cat_Order__Kart___70DDC3D8" FromRole="cat_Orders" ToRole="cat_Karts" />
+          <NavigationProperty Name="cat_Karts" Relationship="CMS_BusgarageModel.FK__cat_Order__Kart___7A672E12" FromRole="cat_Orders" ToRole="cat_Karts" />
         </EntityType>
-        <Association Name="FK__cat_Order__Kart___70DDC3D8">
+        <Association Name="FK__cat_Order__Kart___7A672E12">
           <End Type="CMS_BusgarageModel.cat_Karts" Role="cat_Karts" Multiplicity="1" />
           <End Type="CMS_BusgarageModel.cat_Orders" Role="cat_Orders" Multiplicity="*" />
           <ReferentialConstraint>
@@ -547,6 +607,42 @@ warning 6002: The table/view 'CMS_Busgarage.dbo.vw_Sepomex_Info' does not have a
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="vw_Orders">
+          <Key>
+            <PropertyRef Name="Order_Id" />
+            <PropertyRef Name="Kart_Id" />
+            <PropertyRef Name="Kart_Json_Config" />
+            <PropertyRef Name="Order_Client_Name" />
+            <PropertyRef Name="Order_Client_Email" />
+            <PropertyRef Name="Order_Client_Phone" />
+            <PropertyRef Name="Order_Client_Address1" />
+            <PropertyRef Name="Order_Client_Address2" />
+            <PropertyRef Name="Order_Client_Province" />
+            <PropertyRef Name="Order_Client_City" />
+            <PropertyRef Name="Order_Client_Zip" />
+            <PropertyRef Name="Order_Client_Comments" />
+            <PropertyRef Name="Order_Creation_Date" />
+            <PropertyRef Name="Order_Openpay_ChargeId" />
+            <PropertyRef Name="Order_Payment_Status" />
+          </Key>
+          <Property Name="Order_Id" Type="Int32" Nullable="false" />
+          <Property Name="Kart_Id" Type="Int32" Nullable="false" />
+          <Property Name="Kart_Json_Config" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Order_Client_Name" Type="String" Nullable="false" MaxLength="1024" FixedLength="false" Unicode="true" />
+          <Property Name="Order_Client_Email" Type="String" Nullable="false" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="Order_Client_Phone" Type="String" Nullable="false" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="Order_Client_Address1" Type="String" Nullable="false" MaxLength="1024" FixedLength="false" Unicode="true" />
+          <Property Name="Order_Client_Address2" Type="String" Nullable="false" MaxLength="1024" FixedLength="false" Unicode="true" />
+          <Property Name="Order_Client_Province" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Order_Client_City" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Order_Client_Zip" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="true" />
+          <Property Name="Order_Client_Comments" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Order_Creation_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Order_Delivered_Date" Type="DateTime" Precision="3" />
+          <Property Name="Order_Openpay_ChargeId" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Order_Payment_Status" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Order_Tracking_Id" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -709,6 +805,29 @@ warning 6002: The table/view 'CMS_Busgarage.dbo.vw_Sepomex_Info' does not have a
                 <ScalarProperty Name="Order_Client_Phone" ColumnName="Order_Client_Phone" />
                 <ScalarProperty Name="Order_Client_Email" ColumnName="Order_Client_Email" />
                 <ScalarProperty Name="Order_Client_Name" ColumnName="Order_Client_Name" />
+                <ScalarProperty Name="Kart_Id" ColumnName="Kart_Id" />
+                <ScalarProperty Name="Order_Id" ColumnName="Order_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_Orders">
+            <EntityTypeMapping TypeName="CMS_BusgarageModel.vw_Orders">
+              <MappingFragment StoreEntitySet="vw_Orders">
+                <ScalarProperty Name="Order_Tracking_Id" ColumnName="Order_Tracking_Id" />
+                <ScalarProperty Name="Order_Payment_Status" ColumnName="Order_Payment_Status" />
+                <ScalarProperty Name="Order_Openpay_ChargeId" ColumnName="Order_Openpay_ChargeId" />
+                <ScalarProperty Name="Order_Delivered_Date" ColumnName="Order_Delivered_Date" />
+                <ScalarProperty Name="Order_Creation_Date" ColumnName="Order_Creation_Date" />
+                <ScalarProperty Name="Order_Client_Comments" ColumnName="Order_Client_Comments" />
+                <ScalarProperty Name="Order_Client_Zip" ColumnName="Order_Client_Zip" />
+                <ScalarProperty Name="Order_Client_City" ColumnName="Order_Client_City" />
+                <ScalarProperty Name="Order_Client_Province" ColumnName="Order_Client_Province" />
+                <ScalarProperty Name="Order_Client_Address2" ColumnName="Order_Client_Address2" />
+                <ScalarProperty Name="Order_Client_Address1" ColumnName="Order_Client_Address1" />
+                <ScalarProperty Name="Order_Client_Phone" ColumnName="Order_Client_Phone" />
+                <ScalarProperty Name="Order_Client_Email" ColumnName="Order_Client_Email" />
+                <ScalarProperty Name="Order_Client_Name" ColumnName="Order_Client_Name" />
+                <ScalarProperty Name="Kart_Json_Config" ColumnName="Kart_Json_Config" />
                 <ScalarProperty Name="Kart_Id" ColumnName="Kart_Id" />
                 <ScalarProperty Name="Order_Id" ColumnName="Order_Id" />
               </MappingFragment>

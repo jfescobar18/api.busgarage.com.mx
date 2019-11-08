@@ -166,3 +166,27 @@ AS
       ,[d_ciudad]
 	FROM [dbo].[cat_Sepomex]
 GO
+
+CREATE VIEW [dbo].[vw_Orders]
+AS
+	SELECT [Order_Id]
+      ,[dbo].[cat_Karts].[Kart_Id]
+	  ,[dbo].[cat_Karts].[Kart_Json_Config]
+      ,[Order_Client_Name]
+      ,[Order_Client_Email]
+      ,[Order_Client_Phone]
+      ,[Order_Client_Address1]
+      ,[Order_Client_Address2]
+      ,[Order_Client_Province]
+      ,[Order_Client_City]
+      ,[Order_Client_Zip]
+      ,[Order_Client_Comments]
+      ,[Order_Creation_Date]
+      ,[Order_Delivered_Date]
+      ,[Order_Openpay_ChargeId]
+	  ,'' AS [Order_Payment_Status]
+      ,[Order_Tracking_Id]
+  FROM [dbo].[cat_Orders]
+  INNER JOIN [dbo].[cat_Karts]
+  ON [dbo].[cat_Orders].[Kart_Id] = [dbo].[cat_Karts].[Kart_Id]
+GO

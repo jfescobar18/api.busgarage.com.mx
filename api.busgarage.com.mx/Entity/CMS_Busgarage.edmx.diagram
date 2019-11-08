@@ -20,8 +20,9 @@
         <AssociationConnector Association="CMS_BusgarageModel.FK__cat_Produ__Produ__619B8048" />
         <EntityTypeShape EntityType="CMS_BusgarageModel.vw_Sepomex_Info" Width="1.5" PointX="5.375" PointY="5.75" />
         <EntityTypeShape EntityType="CMS_BusgarageModel.cat_Sepomex" Width="1.5" PointX="10.375" PointY="0.75" />
-        <EntityTypeShape EntityType="CMS_BusgarageModel.cat_Orders" Width="1.5" PointX="8" PointY="0.875" />
-        <AssociationConnector Association="CMS_BusgarageModel.FK__cat_Order__Kart___70DDC3D8" />
+        <EntityTypeShape EntityType="CMS_BusgarageModel.cat_Orders" Width="1.5" PointX="8.375" PointY="0.875" />
+        <AssociationConnector Association="CMS_BusgarageModel.FK__cat_Order__Kart___7A672E12" />
+        <EntityTypeShape EntityType="CMS_BusgarageModel.vw_Orders" Width="1.5" PointX="8.375" PointY="10.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

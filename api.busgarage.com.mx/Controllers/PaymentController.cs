@@ -22,6 +22,31 @@ namespace api.busgarage.com.mx.Controllers
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class PaymentController : ApiController
     {
+        [HttpGet]
+        [Route("Payment/GetPaymentStatus/{transaction_id}")]
+        public async Task<HttpResponseMessage> GetPaymentStatus(string transaction_id)
+        {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            HttpStatusCode statusCode = HttpStatusCode.BadRequest;
+
+            try
+            {   
+                dict.Add("PaymentStatus", PaymentUtils.GetPaymentStatus(transaction_id));
+                statusCode = HttpStatusCode.OK;
+            }
+            catch (Exception ex)
+            {
+                if (dict.Keys.Count > 0)
+                {
+                    dict = new Dictionary<string, object>();
+                }
+                dict.Add("message", ex.Message);
+            }
+
+            await Task.CompletedTask;
+            return Request.CreateResponse(statusCode, dict);
+        }
+
         [HttpPost]
         [Route("Payment/ProcessOrder")]
         public async Task<HttpResponseMessage> ProcessOrder([FromBody] PaymentOrder json)
@@ -57,7 +82,7 @@ namespace api.busgarage.com.mx.Controllers
                     string orderNumber = String.Empty;
                     string paymentReference = json.Method == "store" ? charge.PaymentMethod.Reference : String.Empty;
 
-                    AddOrder(json.JsonOrder, charge.Id, paymentReference, ref kartProducts, ref orderNumber);
+                    AddOrder(json.JsonOrder, charge.Id, ref kartProducts, ref orderNumber);
                     statusCode = HttpStatusCode.OK;
 
                     MailingUtils.SendOrderEmail(charge.Status == "completed", kartProducts, orderNumber, paymentReference, json.Email, "Orden Busgarage");
@@ -83,7 +108,7 @@ namespace api.busgarage.com.mx.Controllers
             return Request.CreateResponse(statusCode, dict);
         }
 
-        public void AddOrder(string jsonString, string chargeId, string paymentReference, ref List<KartProducts> kartProducts, ref string orderNumber)
+        public void AddOrder(string jsonString, string ChargeId, ref List<KartProducts> kartProducts, ref string orderNumber)
         {
             CMS_BusgarageEntities entity = new CMS_BusgarageEntities();
 
@@ -116,7 +141,7 @@ namespace api.busgarage.com.mx.Controllers
                     Order_Client_Comments = json.Order_Client_Comments,
                     Order_Creation_Date = DateTime.Now,
                     Order_Delivered_Date = null,
-                    Order_Openpay_ChargeId = chargeId,
+                    Order_Openpay_ChargeId = ChargeId,
                     Order_Tracking_Id = String.Empty
                 };
 

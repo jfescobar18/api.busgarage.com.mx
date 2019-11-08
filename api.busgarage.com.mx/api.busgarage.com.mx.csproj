@@ -150,6 +150,13 @@
     <Compile Include="Controllers\AdminProductController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
+    <Compile Include="Entity\cat_Orders.cs">
+      <DependentUpon>CMS_Busgarage.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\vw_Orders.cs">
+      <DependentUpon>CMS_Busgarage.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TrackingInformation.cs" />
     <Compile Include="Resources\EmailResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -168,9 +175,6 @@
       <DependentUpon>CMS_Busgarage.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\cat_Offers_Image.cs">
-      <DependentUpon>CMS_Busgarage.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\cat_Orders.cs">
       <DependentUpon>CMS_Busgarage.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\cat_Products.cs">
@@ -229,6 +233,7 @@
     <Compile Include="Utils\CredentialUtils.cs" />
     <Compile Include="Utils\FileUtils.cs" />
     <Compile Include="Utils\MailingUtils.cs" />
+    <Compile Include="Utils\PaymentUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -252,6 +257,7 @@
     <Content Include="Mailing\img\youtube.png" />
     <Content Include="Mailing\orderConfirmedEmail.html" />
     <Content Include="Mailing\paymentOderEmail.html" />
+    <Content Include="Mailing\trackingIdEmail.html" />
     <Content Include="SQL\05102019_Create_Database.sql" />
     <None Include="SQL\05102019_Insert_cat_Sepomex_R1.sql" />
     <None Include="SQL\05102019_Insert_cat_Sepomex_R2.sql" />

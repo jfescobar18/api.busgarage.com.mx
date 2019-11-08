@@ -18,7 +18,6 @@ namespace api.busgarage.com.mx.Entity
         public CMS_BusgarageEntities()
             : base("name=CMS_BusgarageEntities")
         {
-            this.Configuration.ProxyCreationEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -39,5 +38,6 @@ namespace api.busgarage.com.mx.Entity
         public virtual DbSet<vw_Sepomex_Info> vw_Sepomex_Info { get; set; }
         public virtual DbSet<cat_Sepomex> cat_Sepomex { get; set; }
         public virtual DbSet<cat_Orders> cat_Orders { get; set; }
+        public virtual DbSet<vw_Orders> vw_Orders { get; set; }
     }
 }

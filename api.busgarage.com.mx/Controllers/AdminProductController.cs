@@ -1,4 +1,5 @@
 ﻿using api.busgarage.com.mx.Entity;
+using api.busgarage.com.mx.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -432,10 +433,39 @@ namespace api.busgarage.com.mx.Controllers
                 order.Order_Client_Comments = json.Order_Client_Comments;
                 order.Order_Creation_Date = DateTime.Now;
                 order.Order_Delivered_Date = json.Order_Delivered_Date;
+                order.Order_Tracking_Id = json.Order_Tracking_Id;
                 entity.SaveChanges();
 
                 statusCode = HttpStatusCode.OK;
                 dict.Add("message", "Order updated successfully");
+            }
+            catch (Exception ex)
+            {
+                dict.Add("message", ex.Message);
+            }
+
+            await Task.CompletedTask;
+            return Request.CreateResponse(statusCode, dict);
+        }
+
+        [HttpPost]
+        [Route("AdminContent/SendTrackingId")]
+        public async Task<HttpResponseMessage> SendTrackingId([FromBody] TrackingInformation json)
+        {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            CMS_BusgarageEntities entity = new CMS_BusgarageEntities();
+            HttpStatusCode statusCode = HttpStatusCode.BadRequest;
+
+            try
+            {
+                var order = entity.cat_Orders.SingleOrDefault(x => x.Order_Id == json.Order_Id);
+                order.Order_Tracking_Id = json.TrackingId;
+                entity.SaveChanges();
+
+                MailingUtils.SendTrackingIdEmail(json.ClientEmail, json.TrackingId, json.ShippingService);
+
+                statusCode = HttpStatusCode.OK;
+                dict.Add("message", "TrackingId sent successfully");
             }
             catch (Exception ex)
             {
@@ -475,12 +505,19 @@ namespace api.busgarage.com.mx.Controllers
 
         [HttpGet]
         [Route("AdminContent/GetOders")]
-        public async Task<List<cat_Orders>> GetOders()
+        public async Task<List<vw_Orders>> GetOders()
         {
             CMS_BusgarageEntities entity = new CMS_BusgarageEntities();
 
+            var orders = entity.vw_Orders.ToList();
+
+            foreach (var order in orders)
+            {
+                order.Order_Payment_Status = PaymentUtils.GetPaymentStatus(order.Order_Openpay_ChargeId);
+            }
+
             await Task.CompletedTask;
-            return entity.cat_Orders.ToList();
+            return orders;
         }
         #endregion
 
