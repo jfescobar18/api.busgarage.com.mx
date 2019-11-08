@@ -18,6 +18,7 @@ namespace api.busgarage.com.mx.Entity
         public CMS_BusgarageEntities()
             : base("name=CMS_BusgarageEntities")
         {
+            this.Configuration.ProxyCreationEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
