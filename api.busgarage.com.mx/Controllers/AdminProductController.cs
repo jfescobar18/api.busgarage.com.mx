@@ -318,6 +318,29 @@ namespace api.busgarage.com.mx.Controllers
             await Task.CompletedTask;
             return entity.vw_Products.Where(x => x.Product_Released == false).OrderBy(x => x.Product_Creation_Date).ToList();
         }
+
+        [HttpGet]
+        [Route("AdminContent/Search_Products/{Word}")]
+        public async Task<List<vw_Products>> Search_Products(string Word)
+        {
+            CMS_BusgarageEntities entity = new CMS_BusgarageEntities();
+
+            Word = Word.Replace("+", " ");
+            if(Word.ToLower()[Word.Length - 1] == 's' && Word.Length > 1)
+            {
+                Word = Word.Substring(0, Word.Length - 2);
+            }
+
+            await Task.CompletedTask;
+            return entity.vw_Products.Where(
+                x =>
+                    x.Product_Name.Contains(Word) ||
+                    x.Category_Name.Contains(Word) ||
+                    x.Product_Description.Contains(Word)
+                    &&
+                    x.Product_Released == false
+                ).OrderBy(x => x.Product_Creation_Date).ToList();
+        }
         #endregion
 
         #region Kart
