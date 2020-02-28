@@ -1,12 +1,14 @@
-﻿using api.busgarage.com.mx;
+﻿using AegisImplicitMail;
 using api.busgarage.com.mx.Entity;
 using api.busgarage.com.mx.Models;
 using api.busgarage.com.mx.Resources;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
+using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
@@ -76,36 +78,46 @@ namespace Utils
 
         private static void SendEmail(string bodyEmail, string To, string Subject)
         {
-            SmtpClient client = new SmtpClient();
-            client.Port = 587;
-            client.Host = EmailResources.Host;
-            client.EnableSsl = true;
-            client.Timeout = 10000;
-            client.DeliveryMethod = SmtpDeliveryMethod.Network;
-            client.UseDefaultCredentials = false;
-            client.Credentials = new System.Net.NetworkCredential(EmailResources.Username, EmailResources.Password);
+            var mailer = new MimeMailer(EmailResources.Host, 465);
+            mailer.User = EmailResources.Username;
+            mailer.Password = EmailResources.Password;
+            mailer.SslType = SslMode.Ssl;
+            mailer.AuthenticationMode = AuthenticationType.Base64;
 
-            MailMessage mail = new MailMessage(EmailResources.Username, To);
-            mail.IsBodyHtml = true;
-            mail.AlternateViews.Add(alternateView(bodyEmail));
-            mail.BodyEncoding = Encoding.UTF8;
-            mail.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
-            mail.From = new MailAddress(EmailResources.Username, @"Busgarage 🏁");
-            mail.Subject = Subject;
-            mail.Body = bodyEmail;
-            client.Send(mail);
+            var message = new MimeMailMessage();
+            message.From = new MimeMailAddress(EmailResources.Username, "Busgarage");
+            message.To.Add(To);
+            message.IsBodyHtml = true;
+            message.AlternateViews.Add(alternateView(bodyEmail));
+            message.BodyEncoding = Encoding.UTF8;
+            message.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
+            message.Subject = Subject;
+            message.Body = bodyEmail;
+            mailer.SendCompleted += compEvent;
+            mailer.SendMailAsync(message);
+        }
+
+        private static void compEvent(object sender, AsyncCompletedEventArgs e)
+        {
+            if (e.UserState != null)
+                Console.Out.WriteLine(e.UserState.ToString());
+
+            Console.Out.WriteLine("is it canceled? " + e.Cancelled);
+
+            if (e.Error != null)
+                Console.Out.WriteLine("Error : " + e.Error.Message);
         }
 
         private static AlternateView alternateView(string bodyEmail)
         {
-            AlternateView vw = AlternateView.CreateAlternateViewFromString(bodyEmail, null, System.Net.Mime.MediaTypeNames.Text.Html);
+            AlternateView vw = AlternateView.CreateAlternateViewFromString(bodyEmail, null, MediaTypeNames.Text.Html);
 
-            LinkedResource logo = new LinkedResource(HttpContext.Current.Server.MapPath("~/Mailing/img/logo.png"), System.Net.Mime.MediaTypeNames.Image.Jpeg);
-            LinkedResource instagram = new LinkedResource(HttpContext.Current.Server.MapPath("~/Mailing/img/instagram.png"), System.Net.Mime.MediaTypeNames.Image.Jpeg);
-            LinkedResource facebook = new LinkedResource(HttpContext.Current.Server.MapPath("~/Mailing/img/facebook.png"), System.Net.Mime.MediaTypeNames.Image.Jpeg);
-            LinkedResource website = new LinkedResource(HttpContext.Current.Server.MapPath("~/Mailing/img/website.png"), System.Net.Mime.MediaTypeNames.Image.Jpeg);
-            LinkedResource email = new LinkedResource(HttpContext.Current.Server.MapPath("~/Mailing/img/email.png"), System.Net.Mime.MediaTypeNames.Image.Jpeg);
-            LinkedResource youtube = new LinkedResource(HttpContext.Current.Server.MapPath("~/Mailing/img/youtube.png"), System.Net.Mime.MediaTypeNames.Image.Jpeg);
+            LinkedResource logo = new LinkedResource(HttpContext.Current.Server.MapPath("~/Mailing/img/logo.png"), MediaTypeNames.Image.Jpeg);
+            LinkedResource instagram = new LinkedResource(HttpContext.Current.Server.MapPath("~/Mailing/img/instagram.png"), MediaTypeNames.Image.Jpeg);
+            LinkedResource facebook = new LinkedResource(HttpContext.Current.Server.MapPath("~/Mailing/img/facebook.png"), MediaTypeNames.Image.Jpeg);
+            LinkedResource website = new LinkedResource(HttpContext.Current.Server.MapPath("~/Mailing/img/website.png"), MediaTypeNames.Image.Jpeg);
+            LinkedResource email = new LinkedResource(HttpContext.Current.Server.MapPath("~/Mailing/img/email.png"), MediaTypeNames.Image.Jpeg);
+            LinkedResource youtube = new LinkedResource(HttpContext.Current.Server.MapPath("~/Mailing/img/youtube.png"), MediaTypeNames.Image.Jpeg);
 
             logo.ContentId = "logo";
             instagram.ContentId = "instagram";
@@ -113,6 +125,13 @@ namespace Utils
             website.ContentId = "website";
             email.ContentId = "email";
             youtube.ContentId = "youtube";
+
+            logo.TransferEncoding = TransferEncoding.Base64;
+            instagram.TransferEncoding = TransferEncoding.Base64;
+            facebook.TransferEncoding = TransferEncoding.Base64;
+            website.TransferEncoding = TransferEncoding.Base64;
+            email.TransferEncoding = TransferEncoding.Base64;
+            youtube.TransferEncoding = TransferEncoding.Base64;
 
             vw.LinkedResources.Add(logo);
             vw.LinkedResources.Add(instagram);
